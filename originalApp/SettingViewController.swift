@@ -14,12 +14,9 @@ import SVProgressHUD
 
 class SettingViewController: UIViewController {
     @IBOutlet weak var displayNameTextField: UITextField!
-    
     @IBOutlet weak var genderTextField: UITextField!
     @IBOutlet weak var statureTextField: UITextField!
     @IBOutlet weak var prefecturesTextField: UITextField!
-    
-    
     
     @IBAction func handleChangeButton(_ sender: Any) {
         if let displayName = displayNameTextField.text {
@@ -65,6 +62,7 @@ class SettingViewController: UIViewController {
         
      
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
