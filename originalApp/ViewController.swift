@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 @IBDesignable
 class KerningLabel: UILabel {
@@ -20,127 +22,169 @@ class KerningLabel: UILabel {
         }
     }
 }
-//
-//var publicTime = ""
-//
-//var area = ""
-//var city = ""
-//var prefecture = ""
-//var descriptionText = ""
-//var descriptionPublicTime = ""
-//
-//struct Weather {
-//    var dateLabel: String
-//    var telop: String
-//    var date: String
-//    var minTemperatureCcelsius: String
-//    var maxTemperatureCcelsius: String
-//    var url: String
-//    var title: String
-//    var width: Int
-//    var height: Int
-//
-//    init(dateLabel: String, telop: String, date: String, minTemperatureCcelsius: String, maxTemperatureCcelsius: String, url: String, title: String, width: Int, height: Int) {
-//        self.dateLabel = dateLabel
-//        self.telop = telop
-//        self.date = date
-//        self.minTemperatureCcelsius = minTemperatureCcelsius
-//        self.maxTemperatureCcelsius = maxTemperatureCcelsius
-//        self.url = url
-//        self.title = title
-//        self.width = width
-//        self.height = height
-//    }
-//}
-//var weather = [Weather]()
-//
-class ViewController: UIViewController {
 
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var postArray: [PostData] = []
+    
+    // DatabaseのobserveEventの登録状態を表す
+    var observing = false
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            // ログインしていないときの処理
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            self.present(loginViewController!, animated: true, completion: nil)
+        }
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        let areaCode = "130010" // 東京エリア
-//        let urlWeather = "http://weather.livedoor.com/forecast/webservice/json/v1?city=" + areaCode
-//
-//
-//        if let url = URL(string: urlWeather) {
-//            let req = NSMutableURLRequest(url: url)
-//            req.httpMethod = "GET"
-//
-//            let task = URLSession.shared.dataTask(with: req as URLRequest, completionHandler: {(data, resp, err) in
-//                //print(resp!.url!)
-//                //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as Any)
-//
-//                // 受け取ったdataをJSONパース、エラーならcatchへジャンプ
-//                do {
-//                    // dataをJSONパースし、変数"getJson"に格納
-//                    let getJson = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-//
-//                    publicTime = (getJson["publicTime"] as? String)!
-//                    print("\(publicTime)")
-//
-//                    let location = (getJson["location"] as? NSDictionary)!
-//                    area = (location["area"] as? String)!
-//                    city = (location["city"] as? String)!
-//                    prefecture = (location["prefecture"] as? String)!
-//                    print("\(area):\(city):\(prefecture)")
-//
-//                    let description = (getJson["description"] as? NSDictionary)!
-//                    descriptionText = (description["text"] as? String)!
-//                    descriptionPublicTime = (description["publicTime"] as? String)!
-//                    print("\(descriptionText):\(descriptionPublicTime)")
-//
-//                    let forcasts = (getJson["forecasts"] as? NSArray)!
-//                    for dailyForcast in forcasts {
-//                        let forcast = dailyForcast as! NSDictionary
-//                        let dateLabel = (forcast["dateLabel"] as? String)!
-//                        let telop = (forcast["telop"] as? String)!
-//                        let date = (forcast["date"] as? String)!
-//
-//                        let temperature = (forcast["temperature"] as? NSDictionary)!
-//                        let minTemperature = (temperature["min"] as? NSDictionary)
-//                        var minTemperatureCcelsius: String
-//                        if minTemperature == nil {
-//                            minTemperatureCcelsius = "-"
-//                        }else{
-//                            minTemperatureCcelsius = (minTemperature?["celsius"] as? String)!
-//                        }
-//
-//                        let maxTemperature = (temperature["max"] as? NSDictionary)
-//                        var maxTemperatureCcelsius: String
-//                        if maxTemperature == nil {
-//                            maxTemperatureCcelsius = "-"
-//                        }else{
-//                            maxTemperatureCcelsius = (maxTemperature?["celsius"] as? String)!
-//                        }
-//
-//                        let image = (forcast["image"] as? NSDictionary)!
-//                        let url = (image["url"] as? String)!
-//                        let title = (image["title"] as? String)!
-//                        let width = (image["width"] as? Int)!
-//                        let height = (image["height"] as? Int)!
-//
-//                        weather.append(Weather(dateLabel: dateLabel, telop: telop, date: date, minTemperatureCcelsius: minTemperatureCcelsius, maxTemperatureCcelsius: maxTemperatureCcelsius, url: url, title: title, width: width, height: height))
-//                    }
-//
-//                    for w in weather {
-//                        print("\(w.date):\(w.minTemperatureCcelsius):\(w.maxTemperatureCcelsius)")
-//                    }
-//
-//                } catch {
-//                    print ("json error")
-//                    return
-//                }
-//
-//            })
-//            task.resume()
-//        }
-//
-
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // テーブルセルのタップを無効にする
+        tableView.allowsSelection = false
+        
+        let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "Cell")
+        
+//        tableView.estimatedRowHeight = 500
+        // テーブル行の高さをAutoLayoutで自動調整する
+        tableView.rowHeight = UITableView.automaticDimension
+        // テーブル行の高さの概算値を設定しておく
+        // 高さ概算値 = 「縦横比1:1のUIImageViewの高さ(=画面幅)」+「いいねボタン、キャプションラベル、その他余白の高さの合計概算(=100pt)」
+        tableView.estimatedRowHeight = UIScreen.main.bounds.width + 200
     }
-
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("DEBUG_PRINT: viewWillAppear")
+        
+        if Auth.auth().currentUser != nil {
+            if self.observing == false {
+                // 要素が追加されたらpostArrayに追加してTableViewを再表示する
+                let postsRef = Database.database().reference().child(Const.PostPath)
+                postsRef.observe(.childAdded, with: { snapshot in
+                    print("DEBUG_PRINT: .childAddedイベントが発生しました。")
+                    
+                    // PostDataクラスを生成して受け取ったデータを設定する
+                    if let uid = Auth.auth().currentUser?.uid {
+                        let postData = PostData(snapshot: snapshot, myId: uid)
+                        self.postArray.insert(postData, at: 0)
+                        
+                        // TableViewを再表示する
+                        self.tableView.reloadData()
+                    }
+                })
+                // 要素が変更されたら該当のデータをpostArrayから一度削除した後に新しいデータを追加してTableViewを再表示する
+                postsRef.observe(.childChanged, with: { snapshot in
+                    print("DEBUG_PRINT: .childChangedイベントが発生しました。")
+                    
+                    if let uid = Auth.auth().currentUser?.uid {
+                        // PostDataクラスを生成して受け取ったデータを設定する
+                        let postData = PostData(snapshot: snapshot, myId: uid)
+                        
+                        // 保持している配列からidが同じものを探す
+                        var index: Int = 0
+                        for post in self.postArray {
+                            if post.id == postData.id {
+                                index = self.postArray.index(of: post)!
+                                break
+                            }
+                        }
+                        
+                        // 差し替えるため一度削除する
+                        self.postArray.remove(at: index)
+                        
+                        // 削除したところに更新済みのデータを追加する
+                        self.postArray.insert(postData, at: index)
+                        
+                        // TableViewを再表示する
+                        self.tableView.reloadData()
+                    }
+                })
+                
+                // DatabaseのobserveEventが上記コードにより登録されたため
+                // trueとする
+                observing = true
+            }
+        } else {
+            if observing == true {
+                // ログアウトを検出したら、一旦テーブルをクリアしてオブザーバーを削除する。
+                // テーブルをクリアする
+                postArray = []
+                tableView.reloadData()
+                // オブザーバーを削除する
+                Database.database().reference().removeAllObservers()
+                
+                // DatabaseのobserveEventが上記コードにより解除されたため
+                // falseとする
+                observing = false
+            }
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return postArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // セルを取得してデータを設定する
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostTableViewCell
+        cell.setPostData(postArray[indexPath.row])
+        
+        // セル内のボタンのアクションをソースコードで設定する
+        cell.likeButton.addTarget(self, action:#selector(handleButton(_:forEvent:)), for: .touchUpInside)
+        
+        return cell
+    }
+    
+    // セル内のボタンがタップされた時に呼ばれるメソッド
+    @objc func handleButton(_ sender: UIButton, forEvent event: UIEvent) {
+        print("DEBUG_PRINT: likeボタンがタップされました。")
+        
+        // タップされたセルのインデックスを求める
+        let touch = event.allTouches?.first
+        let point = touch!.location(in: self.tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        
+        // 配列からタップされたインデックスのデータを取り出す
+        let postData = postArray[indexPath!.row]
+        
+        // Firebaseに保存するデータの準備
+        if let uid = Auth.auth().currentUser?.uid {
+            if postData.isLiked {
+                // すでにいいねをしていた場合はいいねを解除するためIDを取り除く
+                var index = -1
+                for likeId in postData.likes {
+                    if likeId == uid {
+                        // 削除するためにインデックスを保持しておく
+                        index = postData.likes.index(of: likeId)!
+                        break
+                    }
+                }
+                postData.likes.remove(at: index)
+            } else {
+                postData.likes.append(uid)
+            }
+            
+            // 増えたlikesをFirebaseに保存する
+            let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
+            let likes = ["likes": postData.likes]
+            postRef.updateChildValues(likes)
+            
+        }
+    }
+    
 }
-
 

@@ -18,9 +18,12 @@
 		E671619922A75B3D0057C7BF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E671619822A75B3D0057C7BF /* LoginViewController.swift */; };
 		E671619B22A75B600057C7BF /* ImageSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E671619A22A75B600057C7BF /* ImageSelectViewController.swift */; };
 		E671619D22A75B7A0057C7BF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E671619C22A75B7A0057C7BF /* SettingViewController.swift */; };
-		E671619F22A75B910057C7BF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E671619E22A75B910057C7BF /* HomeViewController.swift */; };
-		E67161A122A75BD40057C7BF /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67161A022A75BD40057C7BF /* MypageViewController.swift */; };
 		E6D727C922A75FC800DEE2A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E671619222A754A80057C7BF /* GoogleService-Info.plist */; };
+		E6D727CB22A8AA1300DEE2A6 /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D727CA22A8AA1300DEE2A6 /* PostData.swift */; };
+		E6D727CF22A8AB9700DEE2A6 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D727CD22A8AB9700DEE2A6 /* PostTableViewCell.swift */; };
+		E6D727D022A8AB9700DEE2A6 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6D727CE22A8AB9700DEE2A6 /* PostTableViewCell.xib */; };
+		E6D727D222A8E4E800DEE2A6 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D727D122A8E4E800DEE2A6 /* Const.swift */; };
+		E6D727D422AA2C4500DEE2A6 /* MypageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D727D322AA2C4500DEE2A6 /* MypageCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,8 +43,11 @@
 		E671619822A75B3D0057C7BF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E671619A22A75B600057C7BF /* ImageSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectViewController.swift; sourceTree = "<group>"; };
 		E671619C22A75B7A0057C7BF /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		E671619E22A75B910057C7BF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		E67161A022A75BD40057C7BF /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewController.swift; sourceTree = "<group>"; };
+		E6D727CA22A8AA1300DEE2A6 /* PostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
+		E6D727CD22A8AB9700DEE2A6 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		E6D727CE22A8AB9700DEE2A6 /* PostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
+		E6D727D122A8E4E800DEE2A6 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		E6D727D322AA2C4500DEE2A6 /* MypageCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,20 +100,23 @@
 		E660C11B22A0B64500C42D49 /* originalApp */ = {
 			isa = PBXGroup;
 			children = (
-				E660C11C22A0B64500C42D49 /* AppDelegate.swift */,
-				E660C11E22A0B64500C42D49 /* ViewController.swift */,
 				E660C12022A0B64500C42D49 /* Main.storyboard */,
 				E660C12322A0B64900C42D49 /* Assets.xcassets */,
 				E660C12522A0B64900C42D49 /* LaunchScreen.storyboard */,
 				E660C12822A0B64900C42D49 /* Info.plist */,
-				E671619E22A75B910057C7BF /* HomeViewController.swift */,
+				E660C11C22A0B64500C42D49 /* AppDelegate.swift */,
+				E660C11E22A0B64500C42D49 /* ViewController.swift */,
 				E671619822A75B3D0057C7BF /* LoginViewController.swift */,
 				E671619A22A75B600057C7BF /* ImageSelectViewController.swift */,
 				E671619622A75B090057C7BF /* SearchViewController.swift */,
 				E671619422A75ADE0057C7BF /* PostViewController.swift */,
 				E671619C22A75B7A0057C7BF /* SettingViewController.swift */,
-				E67161A022A75BD40057C7BF /* MypageViewController.swift */,
 				E671619222A754A80057C7BF /* GoogleService-Info.plist */,
+				E6D727CA22A8AA1300DEE2A6 /* PostData.swift */,
+				E6D727CD22A8AB9700DEE2A6 /* PostTableViewCell.swift */,
+				E6D727CE22A8AB9700DEE2A6 /* PostTableViewCell.xib */,
+				E6D727D122A8E4E800DEE2A6 /* Const.swift */,
+				E6D727D322AA2C4500DEE2A6 /* MypageCollectionViewController.swift */,
 			);
 			path = originalApp;
 			sourceTree = "<group>";
@@ -173,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E660C12722A0B64900C42D49 /* LaunchScreen.storyboard in Resources */,
+				E6D727D022A8AB9700DEE2A6 /* PostTableViewCell.xib in Resources */,
 				E660C12422A0B64900C42D49 /* Assets.xcassets in Resources */,
 				E660C12222A0B64500C42D49 /* Main.storyboard in Resources */,
 				E6D727C922A75FC800DEE2A6 /* GoogleService-Info.plist in Resources */,
@@ -213,8 +223,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-originalApp/Pods-originalApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CLImageEditor/CLImageEditor.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -222,8 +234,10 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CLImageEditor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -239,14 +253,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E67161A122A75BD40057C7BF /* MypageViewController.swift in Sources */,
+				E6D727CF22A8AB9700DEE2A6 /* PostTableViewCell.swift in Sources */,
 				E671619B22A75B600057C7BF /* ImageSelectViewController.swift in Sources */,
 				E671619522A75ADE0057C7BF /* PostViewController.swift in Sources */,
 				E660C11F22A0B64500C42D49 /* ViewController.swift in Sources */,
+				E6D727D222A8E4E800DEE2A6 /* Const.swift in Sources */,
 				E671619722A75B090057C7BF /* SearchViewController.swift in Sources */,
-				E671619F22A75B910057C7BF /* HomeViewController.swift in Sources */,
+				E6D727CB22A8AA1300DEE2A6 /* PostData.swift in Sources */,
 				E671619922A75B3D0057C7BF /* LoginViewController.swift in Sources */,
 				E671619D22A75B7A0057C7BF /* SettingViewController.swift in Sources */,
+				E6D727D422AA2C4500DEE2A6 /* MypageCollectionViewController.swift in Sources */,
 				E660C11D22A0B64500C42D49 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

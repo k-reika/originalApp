@@ -6,4 +6,12 @@
 //  Copyright © 2019 reika.kikuchi. All rights reserved.
 //
 
-import Foundation
+
+import UIKit
+import Firebase
+import FirebaseAuth
+import SVProgressHUD
+
+class SearchViewController: UIViewController {
+    
+}

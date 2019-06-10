@@ -1,4 +1,22 @@
 PODS:
+  - CLImageEditor/AllTools (0.2.3):
+    - CLImageEditor/Core
+    - CLImageEditor/EmoticonTool
+    - CLImageEditor/ResizeTool
+    - CLImageEditor/SplashTool
+    - CLImageEditor/StickerTool
+    - CLImageEditor/TextTool
+  - CLImageEditor/Core (0.2.3)
+  - CLImageEditor/EmoticonTool (0.2.3):
+    - CLImageEditor/Core
+  - CLImageEditor/ResizeTool (0.2.3):
+    - CLImageEditor/Core
+  - CLImageEditor/SplashTool (0.2.3):
+    - CLImageEditor/Core
+  - CLImageEditor/StickerTool (0.2.3):
+    - CLImageEditor/Core
+  - CLImageEditor/TextTool (0.2.3):
+    - CLImageEditor/Core
   - Firebase/Auth (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.4.2)
@@ -67,14 +85,18 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
+  - CLImageEditor/AllTools (= 0.2.3)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - SVProgressHUD (= 2.2.5)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - CLImageEditor
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -87,8 +109,10 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
+  CLImageEditor: 8e50fa16d9230d5d4677a006bb2a2912079a17d8
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAuth: dd7bbf03a5aee0eafb3a1aee4d2812bd74bac890
@@ -101,7 +125,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 40ddb5bcba7dae277c17cb0d6bf6a35c8734cdc5
+PODFILE CHECKSUM: 1c852bae329325ef99871260419a7656155fa1be
 
 COCOAPODS: 1.6.1
