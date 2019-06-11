@@ -16,8 +16,8 @@ class PostViewController: UIViewController {
     var image: UIImage!
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var captionTextView: UITextView!
     
-    @IBOutlet weak var commentTextField: UITextField!
     @IBAction func haundleCancelButton(_ sender: Any) {
         // 画面を閉じる
         dismiss(animated: true, completion: nil)
@@ -34,7 +34,7 @@ class PostViewController: UIViewController {
         
         // 辞書を作成してFirebaseに保存する
         let postRef = Database.database().reference().child(Const.PostPath)
-        let postDic = ["comment": commentTextField.text!, "image": imageString, "time": String(time), "name": name!]
+        let postDic = ["caption": captionTextView.text!, "image": imageString, "time": String(time), "name": name!]
         postRef.childByAutoId().setValue(postDic)
         
         // HUDで投稿完了を表示する
