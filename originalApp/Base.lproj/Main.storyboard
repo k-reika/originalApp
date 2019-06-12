@@ -105,6 +105,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-e1-F8f">
                                 <rect key="frame" x="93.5" y="50" width="188" height="250"/>
+                                <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="Cug-Bl-lnG"/>
                                     <constraint firstAttribute="width" constant="188" id="Lpv-Bn-xJb"/>
@@ -119,7 +120,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pea-64-XBI">
+                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pea-64-XBI">
                                 <rect key="frame" x="245" y="561.5" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="XGD-Ul-xZA"/>
@@ -128,7 +129,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QPY-wp-hpk">
+                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QPY-wp-hpk">
                                 <rect key="frame" x="245" y="479.5" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="jZB-dt-kBC"/>
@@ -185,12 +186,16 @@
                                 <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="#outer:〇〇〇〇, #pants:〇〇〇〇 etc." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6tL-7h-BbG">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6tL-7h-BbG">
                                 <rect key="frame" x="30" y="347" width="315" height="117"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="a5U-xw-V3k"/>
                                 </constraints>
+                                <string key="text">服装はその日の天気に合っていましたか?
+→
+
+#tops: , #bottoms: , #shoes: , #bag: </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -228,6 +233,9 @@
                     <connections>
                         <outlet property="captionTextView" destination="6tL-7h-BbG" id="pjg-sc-3ac"/>
                         <outlet property="imageView" destination="XCX-e1-F8f" id="hj2-PH-EOj"/>
+                        <outlet property="temperatureTextField" destination="sL7-9c-cfY" id="50k-jZ-8AJ"/>
+                        <outlet property="weardateTextField" destination="Pea-64-XBI" id="q8j-xN-mb0"/>
+                        <outlet property="weatherTextField" destination="QPY-wp-hpk" id="7hN-I0-cQS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZDf-4e-gds" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -364,6 +372,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="91t-sg-sjv">
                                 <rect key="frame" x="25" y="89" width="60" height="60"/>
+                                <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="DrG-Mu-Qnb"/>
                                     <constraint firstAttribute="height" constant="60" id="dQ7-c4-aT5"/>
@@ -533,6 +542,8 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="132-q8-KMQ">
                                 <rect key="frame" x="112.5" y="89" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="92g-xp-Mg3"/>
                                     <constraint firstAttribute="width" constant="150" id="wbj-vO-31G"/>
@@ -570,6 +581,7 @@
                     <connections>
                         <outlet property="displayNameTextField" destination="xsI-sE-qI0" id="7h4-YI-tUA"/>
                         <outlet property="genderTextField" destination="fw9-mH-Kak" id="cH7-Yl-dnz"/>
+                        <outlet property="iconImageView" destination="132-q8-KMQ" id="L6e-AV-f7a"/>
                         <outlet property="prefecturesTextField" destination="WOh-g9-037" id="BqC-pD-r4Q"/>
                         <outlet property="statureTextField" destination="47P-Kl-Yp2" id="RGb-X8-Ygf"/>
                     </connections>

@@ -16,6 +16,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var genderpickerView: UIPickerView = UIPickerView()
     var prefecturespickerView: UIPickerView = UIPickerView()
+    var iconimage: UIImage!
     
     let genderlist = ["","男","女"]
     let prefectureslist = ["","北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"]
@@ -24,8 +25,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var genderTextField: UITextField!
     @IBOutlet weak var statureTextField: UITextField!
     @IBOutlet weak var prefecturesTextField: UITextField!
-    
-
+    @IBOutlet weak var iconImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +47,6 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         genderpickerView.selectRow(1, inComponent: 0, animated: true)
         prefecturespickerView.selectRow(1, inComponent: 0, animated: true)
         
-        // ツールバーのインスタンスを作成
-        let toolBar = UIToolbar()
-        
         // ツールバーに配置するアイテムのインスタンスを作成
         let doneItem = UIBarButtonItem(title: "完了", style: .done, target: self, action: #selector(done))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -61,6 +58,9 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         // テキストフィールドにツールバーを設定
         genderTextField.inputAccessoryView = toolbar
         prefecturesTextField.inputAccessoryView = toolbar
+        
+        // 受け取った画像をImageViewに設定する
+        iconImageView.image = iconimage
         
     }
     
@@ -106,37 +106,57 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @objc private func done() {
-        genderTextField.resignFirstResponder()
-        statureTextField.resignFirstResponder()
+        view.endEditing(true)
+//        genderTextField.resignFirstResponder()
+//        statureTextField.resignFirstResponder()
     }
     
     @IBAction func handleChangeButton(_ sender: Any) {
-        if let displayName = displayNameTextField.text {
-            
-            // 表示名が入力されていない時はHUDを出して何もしない
-            if displayName.isEmpty {
-                SVProgressHUD.showError(withStatus: "表示名を入力して下さい")
-                return
-            }
-            
-            // 表示名を設定する
-            let user = Auth.auth().currentUser
-            if let user = user {
-                let changeRequest = user.createProfileChangeRequest()
-                changeRequest.displayName = displayName
-                changeRequest.commitChanges { error in
-                    if let error = error {
-                        SVProgressHUD.showError(withStatus: "表示名の変更に失敗しました。")
-                        print("DEBUG_PRINT: " + error.localizedDescription)
-                        return
-                    }
-                    print("DEBUG_PRINT: [displayName = \(user.displayName!)]の設定に成功しました。")
-                    
-                    // HUDで完了を知らせる
-                    SVProgressHUD.showSuccess(withStatus: "表示名を変更しました")
-                }
-            }
-        }
+//        if let displayName = displayNameTextField.text {
+//
+//            // 表示名が入力されていない時はHUDを出して何もしない
+//            if displayName.isEmpty {
+//                SVProgressHUD.showError(withStatus: "表示名を入力して下さい")
+//                return
+//            }
+//
+//            // 表示名を設定する
+//            let user = Auth.auth().currentUser
+//            if let user = user {
+//                let changeRequest = user.createProfileChangeRequest()
+//                changeRequest.displayName = displayName
+//                changeRequest.commitChanges { error in
+//                    if let error = error {
+//                        SVProgressHUD.showError(withStatus: "表示名の変更に失敗しました。")
+//                        print("DEBUG_PRINT: " + error.localizedDescription)
+//                        return
+//                    }
+//                    print("DEBUG_PRINT: [displayName = \(user.displayName!)]の設定に成功しました。")
+//
+//                    // HUDで完了を知らせる
+//                    SVProgressHUD.showSuccess(withStatus: "表示名を変更しました")
+//                }
+//            }
+//        }
+        
+        // Firebaseに保存する
+        
+        // ImageViewから画像を取得する
+        let iconimageData = iconImageView.image!.jpegData(compressionQuality: 0.5)
+        let iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
+        
+//        // postDataに必要な情報を取得しておく
+//        let time = Date.timeIntervalSinceReferenceDate
+        let name = Auth.auth().currentUser?.displayName
+
+        // 辞書を作成してFirebaseに保存する
+        let userRef = Database.database().reference().child(Users.UserPath)
+        let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefecture":prefecturesTextField.text!, "name": name!]
+        userRef.childByAutoId().setValue(userDic)
+        
+        // HUDで投稿完了を表示する
+        SVProgressHUD.showSuccess(withStatus: "投稿しました")
+        
         // キーボードを閉じる
         self.view.endEditing(true)
     

@@ -12,13 +12,19 @@ import FirebaseDatabase
 
 class PostData: NSObject {
     var id: String?
+    var userid: String?
     var image: UIImage?
     var imageString: String?
-    var name: String?
-    var comment: String?
+    
+    var caption: String?
+    var weather: String?
+    var temperature: Int?
     var date: Date?
+    var weardate: Date?
     var likes: [String] = []
     var isLiked: Bool = false
+    
+    
     
     init(snapshot: DataSnapshot, myId: String) {
         self.id = snapshot.key
@@ -28,9 +34,15 @@ class PostData: NSObject {
         imageString = valueDictionary["image"] as? String
         image = UIImage(data: Data(base64Encoded: imageString!, options: .ignoreUnknownCharacters)!)
         
-        self.name = valueDictionary["name"] as? String
+        self.userid = valueDictionary["userid"] as? String
         
-        self.comment = valueDictionary["comment"] as? String
+        self.caption = valueDictionary["caption"] as? String
+        
+        self.weather = valueDictionary["weather"] as? String
+        
+        self.temperature = valueDictionary["temperature"] as? Int
+        
+        self.weardate = valueDictionary["weardate"] as? Date
         
         let time = valueDictionary["time"] as? String
         self.date = Date(timeIntervalSinceReferenceDate: TimeInterval(time!)!)
@@ -45,5 +57,7 @@ class PostData: NSObject {
                 break
             }
         }
+        
+        
     }
 }

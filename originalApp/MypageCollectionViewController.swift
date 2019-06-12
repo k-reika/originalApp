@@ -52,7 +52,7 @@ extension MypageCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .white
+        cell.backgroundColor = .cyan
         
 //        if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
 //            imageView.image = Firebase.image

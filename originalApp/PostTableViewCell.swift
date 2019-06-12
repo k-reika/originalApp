@@ -17,8 +17,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var wearLabel: UILabel!
+    @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
     
@@ -36,12 +35,12 @@ class PostTableViewCell: UITableViewCell {
     func setPostData(_ postData: PostData) {
         self.postImageView.image = postData.image
         
-        self.commentLabel.text = "\(postData.name!) : \(postData.comment!)"
+        self.captionLabel.text = "\(postData.caption!)\n"
         let likeNumber = postData.likes.count
         likeLabel.text = "\(likeNumber)"
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        formatter.dateFormat = "yyyy-MM-dd"
         let dateString = formatter.string(from: postData.date!)
         self.dateLabel.text = dateString
         

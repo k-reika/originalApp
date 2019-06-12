@@ -11,3 +11,8 @@ import Foundation
 struct Const {
     static let PostPath = "posts"
 }
+
+struct Users {
+    static let UserPath = "users"
+}
+
