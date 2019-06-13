@@ -14,13 +14,18 @@ import SVProgressHUD
 private let reuseIdentifier = "Cell"
 
 class MypageCollectionViewController: UIViewController {
+    
+    var iconimage: UIImage!
    
+    @IBOutlet weak var iconImageView: NSLayoutConstraint!
+    @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func settingButton(_ sender: Any) {
         let settingViewController = self.storyboard?.instantiateViewController(withIdentifier: "Setting")
         self.present(settingViewController!, animated: true, completion: nil)
     }
+
     
     
     override func viewDidLoad() {
@@ -28,6 +33,9 @@ class MypageCollectionViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        // 受け取った画像をImageViewに設定する
+//        iconImageView.image = iconimage
         
         // Register cell classes
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)

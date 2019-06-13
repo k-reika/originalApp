@@ -21,6 +21,8 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let weatherlist = ["","晴れ","曇り","雨","雪"]
     
     var tapTextfieldIndex: Int = 0
+    var activeTextFiled: UITextField?
+    var selectedDate: Date?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var captionTextView: UITextView!
@@ -56,6 +58,9 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         // 受け取った画像をImageViewに設定する
         imageView.image = image
+        
+        // 選んだ日付
+        selectedDate = weardatePicker.date
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -72,13 +77,6 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         weatherTextField.text = weatherlist[row]
         print(weatherlist[row])
         
-//        // 選択時の処理
-//        if pickerView == weatherpickerView {
-//            tapTextfieldIndex = 0
-//        }else{
-//            tapTextfieldIndex = 3
-//        }
-        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -86,15 +84,20 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
        return weatherlist[row]
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        activeTextFiled = textField
+        
+    }
+    
     // UIDatePickerのDoneを押したら
     @objc func done() {
-//        if tapTextfieldIndex == 0 {
-            // 天気のフィールドを選んでいたら、天気のピッカーを閉じる
+        if activeTextFiled == weatherTextField {
             weatherTextField.resignFirstResponder()
-//        }else if tapTextfieldIndex == 3{
-//            weardateTextField.resignFirstResponder()
+            // weatherTextField.text = weatherpickerView.selectedRow(inComponent: )
+        } else if activeTextFiled == weardateTextField {
+            weardateTextField.resignFirstResponder()
             
-            weardateTextField.endEditing(true)
             // 日付のフォーマット
             let formatter = DateFormatter()
             //出力の仕方を変更
@@ -103,8 +106,7 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             //datePickerで指定した日付が表示される
             weardateTextField.text = "\(formatter.string(from: weardatePicker.date))"
             print(weardateTextField.text!)
-            
-//        }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -118,6 +120,11 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     @IBAction func handlePostButton(_ sender: Any) {
+        guard let selectedDate = selectedDate else {
+            //日付選択してください。
+            return
+        }
+        
         // ImageViewから画像を取得する
         let imageData = imageView.image!.jpegData(compressionQuality: 0.5)
         let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
@@ -125,12 +132,12 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         // postDataに必要な情報を取得しておく
         let time = Date.timeIntervalSinceReferenceDate
         let name = Auth.auth().currentUser?.displayName
-        let weardate = weardateTextField.text
+        let weardate = selectedDate.timeIntervalSinceReferenceDate
         let userid = Auth.auth().currentUser?.uid
-        
+
         // 辞書を作成してFirebaseに保存する
         let postRef = Database.database().reference().child(Const.PostPath)
-        let postDic = ["caption": captionTextView.text!, "image": imageString, "weather": weatherTextField.text!,"temperature": temperatureTextField.text!, "time": String(time), "weardate": weardate!,"name": name!,"userid": userid!]
+        let postDic = ["caption": captionTextView.text!, "image": imageString, "weather": weatherTextField.text!,"temperature": temperatureTextField.text!, "time": String(time), "weardate": String(weardate),"name": name!,"userid": userid!]
         postRef.childByAutoId().setValue(postDic)
         
         // HUDで投稿完了を表示する

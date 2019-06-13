@@ -11,9 +11,11 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
+    var iconimage: UIImage!
     
-    @IBOutlet weak var aiconImageView: UIImageView!
-    @IBOutlet weak var aiconNameLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var userLabel: UILabel!
+    
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
@@ -32,7 +34,14 @@ class PostTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setUserData(_ userData: UserData){
+        self.iconImageView.image = userData.iconimage
+        
+        self.userLabel.text = "\(userData.name!),\(userData.gender!),\(userData.stature!),\(userData.prefectures!)"
+    }
+    
     func setPostData(_ postData: PostData) {
+        
         self.postImageView.image = postData.image
         
         self.captionLabel.text = "\(postData.caption!)\n"
@@ -43,6 +52,8 @@ class PostTableViewCell: UITableViewCell {
         formatter.dateFormat = "yyyy-MM-dd"
         let dateString = formatter.string(from: postData.date!)
         self.dateLabel.text = dateString
+//        // 着用日
+//        self.dateLabel.text = "\(postData.weardate!),\(postData.weather!)"
         
         if postData.isLiked {
             let buttonImage = UIImage(named: "like_exist")

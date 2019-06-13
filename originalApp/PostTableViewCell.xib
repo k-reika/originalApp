@@ -96,13 +96,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="aiconImageView" destination="ibv-dw-qFx" id="k2G-lF-4Jg"/>
-                <outlet property="aiconNameLabel" destination="K4z-ZB-lgS" id="ZBb-9s-zox"/>
                 <outlet property="captionLabel" destination="HOY-JT-7f4" id="P6Z-V3-SPd"/>
                 <outlet property="dateLabel" destination="eYh-sT-foX" id="TSj-Pe-4oP"/>
+                <outlet property="iconImageView" destination="ibv-dw-qFx" id="82b-BG-NUd"/>
                 <outlet property="likeButton" destination="XFH-LM-8pN" id="fCF-sX-blO"/>
                 <outlet property="likeLabel" destination="0aw-P8-alp" id="73Y-bW-Vul"/>
                 <outlet property="postImageView" destination="9Ac-x7-KEj" id="YX9-Jc-Rb7"/>
+                <outlet property="userLabel" destination="K4z-ZB-lgS" id="JA6-RV-GFo"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="321.58920539730138"/>
         </tableViewCell>

@@ -27,6 +27,13 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var prefecturesTextField: UITextField!
     @IBOutlet weak var iconImageView: UIImageView!
     
+    @IBAction func iconImageChangeButton(_ sender: Any) {
+//        // アイコン画像選択画面へ遷移する
+//        let IconImageSelectViewController = self.storyboard?.instantiateViewController(withIdentifier: "IconImageSelect")
+//        self.present(IconImageSelectViewController!, animated: true, completion: nil)
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,6 +147,24 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 //        }
         
         // Firebaseに保存する
+        guard let uid =  Auth.auth().currentUser?.uid,  let name = Auth.auth().currentUser?.displayName else {
+            //ログイン画面表示
+            return
+        }
+        
+        //入力がない時、ある時で分岐
+        if let gender = genderTextField.text, let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
+            
+            // アドレスとパスワードと表示名のいずれかでも入力されていない時は何もしない
+            if gender.isEmpty || stature.isEmpty || prefectures.isEmpty || displayName.isEmpty {
+                print("DEBUG_PRINT: 何かが空文字です。")
+                SVProgressHUD.showError(withStatus: "必要項目を入力して下さい")
+                return
+            }
+            // HUDで処理中を表示
+            SVProgressHUD.show()
+            
+        }
         
         // ImageViewから画像を取得する
         let iconimageData = iconImageView.image!.jpegData(compressionQuality: 0.5)
@@ -147,18 +172,22 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
 //        // postDataに必要な情報を取得しておく
 //        let time = Date.timeIntervalSinceReferenceDate
-        let name = Auth.auth().currentUser?.displayName
+//        let name = Auth.auth().currentUser?.displayName
 
         // 辞書を作成してFirebaseに保存する
-        let userRef = Database.database().reference().child(Users.UserPath)
-        let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefecture":prefecturesTextField.text!, "name": name!]
-        userRef.childByAutoId().setValue(userDic)
+        let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+        let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefecture":prefecturesTextField.text!, "name": name]
+        userRef.setValue(userDic)
         
         // HUDで投稿完了を表示する
-        SVProgressHUD.showSuccess(withStatus: "投稿しました")
+        SVProgressHUD.showSuccess(withStatus: "登録しました")
         
         // キーボードを閉じる
         self.view.endEditing(true)
+        
+        // マイページに戻る
+//        dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
     
     }
     
