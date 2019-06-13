@@ -28,6 +28,7 @@ class MypageCollectionViewController: UIViewController {
 
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
