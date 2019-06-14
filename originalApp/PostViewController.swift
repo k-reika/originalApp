@@ -35,6 +35,8 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         weatherpickerView.delegate = self
         weatherpickerView.dataSource = self
+        weatherTextField.delegate = self
+        weardateTextField.delegate = self
         
         weatherpickerView.showsSelectionIndicator = true
         weatherTextField.inputView = weatherpickerView

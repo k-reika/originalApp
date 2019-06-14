@@ -16,8 +16,10 @@ private let reuseIdentifier = "Cell"
 class MypageCollectionViewController: UIViewController {
     
     var iconimage: UIImage!
+    
+//    let ref = Database.database().reference()
    
-    @IBOutlet weak var iconImageView: NSLayoutConstraint!
+    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -35,12 +37,19 @@ class MypageCollectionViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        // 受け取った画像をImageViewに設定する
-//        iconImageView.image = iconimage
-        
-        // Register cell classes
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
+    
+    // データをfirebaseから取得し、表示させる
+//    func setUserData(_ userData: UserData){
+//        // まだfirebaseにデータがない時
+//        if  iconImageView.image == nil{
+//            iconImageView.backgroundColor = UIColor(red: 0.15, green: 0.75, blue: 0.90, alpha: 1)
+//        }
+//        //firebaseにデータがある時
+//        self.iconImageView.image = userData.iconimage
+//        self.userLabel.text = "\(userData.name!),\(userData.gender!),\(userData.stature!),\(userData.prefectures!)"
+//    }
+    
 }
 
 // MARK: UICollectionViewDataSource
