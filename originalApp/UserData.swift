@@ -19,20 +19,26 @@ class UserData: NSObject {
     var prefectures: String?
     
     init(snapshot: DataSnapshot, myId: String) {
-//        self.id = snapshot.key
         
-        let valueDictionary = snapshot.value as! [String: Any]
+        guard let valueDictionary = snapshot.value as? [String: Any] else {
+            return
+        }
         
-        iconimageString = valueDictionary["iconimage"] as? String
-        iconimage = UIImage(data: Data(base64Encoded: iconimageString!, options: .ignoreUnknownCharacters)!)
+        if let iconimageString = valueDictionary["iconimage"] as? String {
+            self.iconimageString = iconimageString
+            
+            if let data = Data(base64Encoded: iconimageString, options: .ignoreUnknownCharacters) {
+                self.iconimage = UIImage(data: data)
+            }
+        }
         
-        self.name = valueDictionary["name"] as? String
+        self.name = valueDictionary["name"] as? String ?? ""
         
-        self.gender = valueDictionary["name"] as? String
+        self.gender = valueDictionary["gender"] as? String  ?? ""
         
-        self.stature = valueDictionary["name"] as? String
+        self.stature = valueDictionary["stature"] as? String  ?? ""
         
-        self.prefectures = valueDictionary["name"] as? String
+        self.prefectures = valueDictionary["prefectures"] as? String  ?? ""
     }
     
 }

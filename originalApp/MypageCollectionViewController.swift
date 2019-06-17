@@ -27,9 +27,6 @@ class MypageCollectionViewController: UIViewController {
         let settingViewController = self.storyboard?.instantiateViewController(withIdentifier: "Setting")
         self.present(settingViewController!, animated: true, completion: nil)
     }
-
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,18 +35,40 @@ class MypageCollectionViewController: UIViewController {
         collectionView.delegate = self
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadUserInfo()
+        
+    }
+    
+    func loadUserInfo(){
+        guard let uid =  Auth.auth().currentUser?.uid else {
+            //ログイン画面表示
+            return
+        }
+        let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+        userRef.observe(.value, with: { snapshot in
+            
+            print(snapshot)
+            
+            let userData = UserData(snapshot: snapshot, myId: uid)
+            self.setUserData(userData)
+        })
+        
+    }
     
     // データをfirebaseから取得し、表示させる
-//    func setUserData(_ userData: UserData){
-//        // まだfirebaseにデータがない時
-//        if  iconImageView.image == nil{
-//            iconImageView.backgroundColor = UIColor(red: 0.15, green: 0.75, blue: 0.90, alpha: 1)
-//        }
-//        //firebaseにデータがある時
-//        self.iconImageView.image = userData.iconimage
-//        self.userLabel.text = "\(userData.name!),\(userData.gender!),\(userData.stature!),\(userData.prefectures!)"
-//    }
-    
+    func setUserData(_ userData: UserData){
+        
+        //firebaseにデータがある時
+        self.iconImageView.image = userData.iconimage
+        // まだfirebaseにデータがない時
+        if  iconImageView.image == nil{
+            iconImageView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+        /// プロフィールを表示
+        self.userLabel.text = "\(userData.name ?? ""),\(userData.gender ?? ""),\(userData.stature ?? ""),\(userData.prefectures ?? "")"
+    }
 }
 
 // MARK: UICollectionViewDataSource
@@ -70,7 +89,7 @@ extension MypageCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .cyan
+        cell.backgroundColor = .white
         
 //        if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
 //            imageView.image = Firebase.image

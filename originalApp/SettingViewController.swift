@@ -113,18 +113,21 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
         
         //入力がない時、ある時で分岐
-        if let gender = genderTextField.text, let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
+        if  let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
             
             // アドレスとパスワードと表示名のいずれかでも入力されていない時は何もしない
-            if gender.isEmpty || stature.isEmpty || prefectures.isEmpty || displayName.isEmpty {
+            if stature.isEmpty || prefectures.isEmpty || displayName.isEmpty {
                 print("DEBUG_PRINT: 何かが空文字です。")
                 SVProgressHUD.showError(withStatus: "必要項目を入力して下さい")
                 return
             }else{
                 // ImageViewから画像を取得する
-                let iconimageData = iconImageView.image!.jpegData(compressionQuality: 0.5)
-                let iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
-                
+                var iconimageString = ""
+                if let image =  iconImageView.image {
+                    let iconimageData = image.jpegData(compressionQuality: 0.5)
+                    iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
+                }
+               
                 //        // postDataに必要な情報を取得しておく
                 //        let time = Date.timeIntervalSinceReferenceDate
                 //        let name = Auth.auth().currentUser?.displayName

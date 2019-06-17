@@ -44,6 +44,9 @@ class PostData: NSObject {
         
         self.weardate = valueDictionary["weardate"] as? Date
         
+//        let wear = valueDictionary["wear"] as? String
+//        self.weardate = Date(timeIntervalSinceReferenceDate: TimeInterval(wear!)!)
+        
         let time = valueDictionary["time"] as? String
         self.date = Date(timeIntervalSinceReferenceDate: TimeInterval(time!)!)
         

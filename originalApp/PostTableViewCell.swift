@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Firebase
+import FirebaseAuth
 
 class PostTableViewCell: UITableViewCell {
     
@@ -25,6 +26,7 @@ class PostTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        loadUserInfo()
         // Initialization code
     }
     
@@ -34,10 +36,33 @@ class PostTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setUserData(_ userData: UserData){
-        self.iconImageView.image = userData.iconimage
+    
+    func loadUserInfo(){
+        guard let uid =  Auth.auth().currentUser?.uid else {
+            //ログイン画面表示
+            return
+        }
+        let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+        userRef.observe(.value, with: { snapshot in
+            
+//            print(snapshot)
+            
+            let userData = UserData(snapshot: snapshot, myId: uid)
+            self.setUserData(userData)
+        })
         
-        self.userLabel.text = "\(userData.name!),\(userData.gender!),\(userData.stature!),\(userData.prefectures!)"
+    }
+    
+    // データをfirebaseから取得し、表示させる
+    func setUserData(_ userData: UserData){
+        //firebaseにデータがある時
+        self.iconImageView.image = userData.iconimage
+        // まだfirebaseにデータがない時
+        if  iconImageView.image == nil{
+            iconImageView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+        /// プロフィールを表示
+        self.userLabel.text = "\(userData.name ?? ""),\(userData.gender ?? ""),\(userData.stature ?? ""),\(userData.prefectures ?? "")"
     }
     
     func setPostData(_ postData: PostData) {
@@ -50,10 +75,14 @@ class PostTableViewCell: UITableViewCell {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let dateString = formatter.string(from: postData.date!)
-        self.dateLabel.text = dateString
-//        // 着用日
-//        self.dateLabel.text = "\(postData.weardate!),\(postData.weather!)"
+//        let weardateString = formatter.string(from: postData.weardate!)
+        if let weardate = postData.weardate, let date = postData.date  {
+            let dateString =  formatter.string(from: date)
+            let weardateString = formatter.string(from: weardate)
+            self.dateLabel.text = "着用日：\(weardateString), 登録日：\(dateString)"
+        } else {
+            self.dateLabel.text = ""
+        }
         
         if postData.isLiked {
             let buttonImage = UIImage(named: "like_exist")

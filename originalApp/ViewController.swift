@@ -28,6 +28,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     var postArray: [PostData] = []
+    var userArray: [UserData] = []
     
     // DatabaseのobserveEventの登録状態を表す
     var observing = false
@@ -75,6 +76,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let postsRef = Database.database().reference().child(Const.PostPath)
                 postsRef.observe(.childAdded, with: { snapshot in
                     print("DEBUG_PRINT: .childAddedイベントが発生しました。")
+                    
                     
                     // PostDataクラスを生成して受け取ったデータを設定する
                     if let uid = Auth.auth().currentUser?.uid {
@@ -142,6 +144,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // セルを取得してデータを設定する
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostTableViewCell
         cell.setPostData(postArray[indexPath.row])
+//        cell.setUserData(userArray[indexPath.row])
         
         // セル内のボタンのアクションをソースコードで設定する
         cell.likeButton.addTarget(self, action:#selector(handleButton(_:forEvent:)), for: .touchUpInside)
