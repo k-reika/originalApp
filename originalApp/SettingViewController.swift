@@ -19,7 +19,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var prefecturespickerView: UIPickerView = UIPickerView()
     var iconimage: UIImage!
     
-    let genderlist = ["","男","女"]
+    let genderlist = ["","MEN","WOMEN"]
     let prefectureslist = ["","北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"]
     
     
@@ -86,7 +86,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         prefecturespickerView.selectRow(1, inComponent: 0, animated: true)
         
         // ツールバーに配置するアイテムのインスタンスを作成
-        let doneItem = UIBarButtonItem(title: "完了", style: .done, target: self, action: #selector(done))
+        let doneItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(done))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
         toolbar.barStyle = .default
@@ -96,6 +96,11 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         // テキストフィールドにツールバーを設定
         genderTextField.inputAccessoryView = toolbar
         prefecturesTextField.inputAccessoryView = toolbar
+        
+        let user = Auth.auth().currentUser
+        if let user = user {
+            displayNameTextField.text = user.displayName
+        }
         
 //        let iconimageselect = IconImageSelectViewController()
 //        iconimageselect.iconimageSelect
@@ -122,7 +127,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 return
             }else{
                 // ImageViewから画像を取得する
-                var iconimageString = ""
+                var iconimageString = (named: "baseline_account_box_black_18pt")
                 if let image =  iconImageView.image {
                     let iconimageData = image.jpegData(compressionQuality: 0.5)
                     iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
@@ -134,7 +139,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 
                 // 辞書を作成してFirebaseに保存する
                 let userRef = Database.database().reference().child(Users.UserPath).child(uid)
-                let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefecture":prefecturesTextField.text!, "name": name]
+                let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefectures":prefecturesTextField.text!, "name": name]
                 userRef.setValue(userDic)
                 
                 // HUDで投稿完了を表示する

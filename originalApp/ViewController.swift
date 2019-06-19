@@ -77,7 +77,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 postsRef.observe(.childAdded, with: { snapshot in
                     print("DEBUG_PRINT: .childAddedイベントが発生しました。")
                     
-                    
                     // PostDataクラスを生成して受け取ったデータを設定する
                     if let uid = Auth.auth().currentUser?.uid {
                         let postData = PostData(snapshot: snapshot, myId: uid)
@@ -124,6 +123,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // ログアウトを検出したら、一旦テーブルをクリアしてオブザーバーを削除する。
                 // テーブルをクリアする
                 postArray = []
+                
                 tableView.reloadData()
                 // オブザーバーを削除する
                 Database.database().reference().removeAllObservers()

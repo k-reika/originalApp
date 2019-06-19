@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="506.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ibv-dw-qFx">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ibv-dw-qFx">
                         <rect key="frame" x="10" y="10" width="40" height="40"/>
                         <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -27,7 +27,7 @@
                             <constraint firstAttribute="width" constant="40" id="iHv-UN-K3R"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Ac-x7-KEj">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Ac-x7-KEj">
                         <rect key="frame" x="41" y="60" width="238" height="317.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="9Ac-x7-KEj" secondAttribute="height" multiplier="3:4" id="zVD-Kz-Ltm"/>

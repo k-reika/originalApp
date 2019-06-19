@@ -105,7 +105,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-e1-F8f">
                                 <rect key="frame" x="93.5" y="50" width="188" height="250"/>
-                                <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="Cug-Bl-lnG"/>
                                     <constraint firstAttribute="width" constant="188" id="Lpv-Bn-xJb"/>
@@ -393,7 +392,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="91t-sg-sjv">
                                 <rect key="frame" x="25" y="89" width="60" height="60"/>
-                                <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="DrG-Mu-Qnb"/>
                                     <constraint firstAttribute="height" constant="60" id="dQ7-c4-aT5"/>
@@ -410,7 +409,7 @@
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BtJ-Jr-Avr">
                                 <rect key="frame" x="0.0" y="174" width="375" height="444"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="KnI-mY-OaU">
                                     <size key="itemSize" width="157" height="189"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -425,12 +424,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="157" height="189"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFU-zR-WAd">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qFU-zR-WAd">
                                                     <rect key="frame" x="0.0" y="0.0" width="157" height="189"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="qFU-zR-WAd" secondAttribute="trailing" id="7li-zo-J7C"/>
+                                            <constraint firstItem="qFU-zR-WAd" firstAttribute="leading" secondItem="3pG-lh-oou" secondAttribute="leading" id="9EN-IO-FvD"/>
+                                            <constraint firstItem="qFU-zR-WAd" firstAttribute="top" secondItem="3pG-lh-oou" secondAttribute="top" id="SNj-1Y-3Oc"/>
+                                            <constraint firstAttribute="bottom" secondItem="qFU-zR-WAd" secondAttribute="bottom" id="wdc-DP-zwN"/>
+                                        </constraints>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -565,7 +570,7 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="132-q8-KMQ">
                                 <rect key="frame" x="112.5" y="89" width="150" height="150"/>
-                                <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="92g-xp-Mg3"/>

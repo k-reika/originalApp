@@ -16,6 +16,8 @@ private let reuseIdentifier = "Cell"
 class MypageCollectionViewController: UIViewController {
     
     var iconimage: UIImage!
+    var postArray: [PostData] = []
+    
     
 //    let ref = Database.database().reference()
    
@@ -23,6 +25,7 @@ class MypageCollectionViewController: UIViewController {
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+//    @IBOutlet weak var collectionImageView: UIImageView!
     @IBAction func settingButton(_ sender: Any) {
         let settingViewController = self.storyboard?.instantiateViewController(withIdentifier: "Setting")
         self.present(settingViewController!, animated: true, completion: nil)
@@ -38,7 +41,7 @@ class MypageCollectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadUserInfo()
-        
+        loadUserPostData()
     }
     
     func loadUserInfo(){
@@ -48,8 +51,6 @@ class MypageCollectionViewController: UIViewController {
         }
         let userRef = Database.database().reference().child(Users.UserPath).child(uid)
         userRef.observe(.value, with: { snapshot in
-            
-            print(snapshot)
             
             let userData = UserData(snapshot: snapshot, myId: uid)
             self.setUserData(userData)
@@ -62,12 +63,35 @@ class MypageCollectionViewController: UIViewController {
         
         //firebaseにデータがある時
         self.iconImageView.image = userData.iconimage
-        // まだfirebaseにデータがない時
-        if  iconImageView.image == nil{
-            iconImageView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        }
         /// プロフィールを表示
-        self.userLabel.text = "\(userData.name ?? ""),\(userData.gender ?? ""),\(userData.stature ?? ""),\(userData.prefectures ?? "")"
+        self.userLabel.text = "\(userData.name ?? "") / \(userData.gender ?? ""), \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
+    }
+    
+    func loadUserPostData() {
+        postArray = []
+        // uidのnilチェック
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        // postpathを呼び出す
+        let  postRef = Database.database().reference().child(Const.PostPath)
+        // uidと一致するものを見つける
+        let query = postRef.queryOrdered(byChild: "userid").queryEqual(toValue: uid)
+        query.observeSingleEvent(of:.value, with: { snapshots in
+            
+//            print(snapshots)
+            
+            for snapshot in snapshots.children {
+                guard let snapshot = snapshot as? DataSnapshot else { continue }
+                let postData = PostData(snapshot: snapshot, myId: uid)
+                self.postArray.append(postData)
+            }
+            self.collectionView.reloadData()
+        })
+        
+        
+        // collectionviewを更新する
+        self.collectionView.reloadData()
     }
 }
 
@@ -83,18 +107,22 @@ extension MypageCollectionViewController: UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return postArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .white
         
-//        if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
-//            imageView.image = Firebase.image
-//        }
+        let postData = postArray[indexPath.item]
         
+        
+        
+        if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
+            let cellimage = postData.image
+            imageView.image = cellimage
+        }
+
         return cell
     }
 }
@@ -105,8 +133,11 @@ extension MypageCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
         let width = (collectionView.frame.size.width - 1) / 2
+        print(width)
+        let height = width * 4 / 3
+        print(height)
+        return CGSize(width: width, height: height )
         
-        return CGSize(width: width, height: width * 1.3)
     }
 }
 

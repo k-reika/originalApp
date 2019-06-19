@@ -55,14 +55,12 @@ class PostTableViewCell: UITableViewCell {
     
     // データをfirebaseから取得し、表示させる
     func setUserData(_ userData: UserData){
-        //firebaseにデータがある時
         self.iconImageView.image = userData.iconimage
-        // まだfirebaseにデータがない時
-        if  iconImageView.image == nil{
-            iconImageView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        }
-        /// プロフィールを表示
-        self.userLabel.text = "\(userData.name ?? ""),\(userData.gender ?? ""),\(userData.stature ?? ""),\(userData.prefectures ?? "")"
+        print("〜アイコン〜")
+        
+        self.userLabel.text = "\(userData.name!) / \(userData.gender!), \(userData.stature!)cm / \(userData.prefectures!)"
+        
+
     }
     
     func setPostData(_ postData: PostData) {
@@ -75,11 +73,10 @@ class PostTableViewCell: UITableViewCell {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-//        let weardateString = formatter.string(from: postData.weardate!)
-        if let weardate = postData.weardate, let date = postData.date  {
-            let dateString =  formatter.string(from: date)
+        //        let weardateString = formatter.string(from: postData.weardate!)
+        if let weardate = postData.weardate {
             let weardateString = formatter.string(from: weardate)
-            self.dateLabel.text = "着用日：\(weardateString), 登録日：\(dateString)"
+            self.dateLabel.text = "着用日：\(weardateString), 天気：\(postData.weather!), 気温：\(postData.temperature!)"
         } else {
             self.dateLabel.text = ""
         }

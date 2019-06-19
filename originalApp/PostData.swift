@@ -18,13 +18,11 @@ class PostData: NSObject {
     
     var caption: String?
     var weather: String?
-    var temperature: Int?
+    var temperature: String?
     var date: Date?
     var weardate: Date?
     var likes: [String] = []
     var isLiked: Bool = false
-    
-    
     
     init(snapshot: DataSnapshot, myId: String) {
         self.id = snapshot.key
@@ -40,15 +38,15 @@ class PostData: NSObject {
         
         self.weather = valueDictionary["weather"] as? String
         
-        self.temperature = valueDictionary["temperature"] as? Int
+        self.temperature = valueDictionary["temperature"] as? String
         
-        self.weardate = valueDictionary["weardate"] as? Date
+        if let time = valueDictionary["weardate"] as? String, let timeInterval = TimeInterval(time) {
+            self.weardate = Date(timeIntervalSinceReferenceDate: timeInterval)
+        }
         
-//        let wear = valueDictionary["wear"] as? String
-//        self.weardate = Date(timeIntervalSinceReferenceDate: TimeInterval(wear!)!)
-        
-        let time = valueDictionary["time"] as? String
-        self.date = Date(timeIntervalSinceReferenceDate: TimeInterval(time!)!)
+        if let time = valueDictionary["time"] as? String, let timeInterval = TimeInterval(time) {
+            self.date = Date(timeIntervalSinceReferenceDate: timeInterval)
+        }
         
         if let likes = valueDictionary["likes"] as? [String] {
             self.likes = likes
