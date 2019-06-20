@@ -250,21 +250,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PbC-lw-Scj">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <searchBar key="tableFooterView" contentMode="redraw" id="afn-Qu-jlu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </searchBar>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="afn-Qu-jlu">
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SMt-Ao-gs4" firstAttribute="trailing" secondItem="PbC-lw-Scj" secondAttribute="trailing" id="NsT-ZT-Tcn"/>
-                            <constraint firstItem="PbC-lw-Scj" firstAttribute="leading" secondItem="SMt-Ao-gs4" secondAttribute="leading" id="ciE-WL-LiK"/>
-                            <constraint firstItem="PbC-lw-Scj" firstAttribute="top" secondItem="SMt-Ao-gs4" secondAttribute="top" id="fcG-Zs-TQL"/>
-                            <constraint firstItem="SMt-Ao-gs4" firstAttribute="bottom" secondItem="PbC-lw-Scj" secondAttribute="bottom" id="ry8-fK-Dd3"/>
+                            <constraint firstItem="PbC-lw-Scj" firstAttribute="top" secondItem="afn-Qu-jlu" secondAttribute="bottom" id="5SG-Pm-mhx"/>
+                            <constraint firstItem="afn-Qu-jlu" firstAttribute="leading" secondItem="SMt-Ao-gs4" secondAttribute="leading" id="BKk-rA-81D"/>
+                            <constraint firstItem="PbC-lw-Scj" firstAttribute="trailing" secondItem="SMt-Ao-gs4" secondAttribute="trailing" id="Q1W-zs-Qbu"/>
+                            <constraint firstItem="PbC-lw-Scj" firstAttribute="leading" secondItem="SMt-Ao-gs4" secondAttribute="leading" id="XMg-AR-aq0"/>
+                            <constraint firstItem="afn-Qu-jlu" firstAttribute="top" secondItem="SMt-Ao-gs4" secondAttribute="top" id="YCl-RG-imB"/>
+                            <constraint firstItem="PbC-lw-Scj" firstAttribute="bottom" secondItem="SMt-Ao-gs4" secondAttribute="bottom" id="maU-VV-TvM"/>
+                            <constraint firstItem="afn-Qu-jlu" firstAttribute="trailing" secondItem="SMt-Ao-gs4" secondAttribute="trailing" id="riu-8o-AyU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SMt-Ao-gs4"/>
                     </view>
@@ -276,7 +278,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sd-dM-qZp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2750" y="331"/>
+            <point key="canvasLocation" x="2749.5999999999999" y="330.58470764617692"/>
         </scene>
         <!--投稿-->
         <scene sceneID="FAI-ty-voC">

@@ -64,7 +64,7 @@ class MypageCollectionViewController: UIViewController {
         //firebaseにデータがある時
         self.iconImageView.image = userData.iconimage
         /// プロフィールを表示
-        self.userLabel.text = "\(userData.name ?? "") / \(userData.gender ?? ""), \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
+        self.userLabel.text = "\(userData.name ?? "") / \(userData.gender ?? "") / \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
     }
     
     func loadUserPostData() {

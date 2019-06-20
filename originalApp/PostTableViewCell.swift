@@ -58,7 +58,7 @@ class PostTableViewCell: UITableViewCell {
         self.iconImageView.image = userData.iconimage
         print("〜アイコン〜")
         
-        self.userLabel.text = "\(userData.name!) / \(userData.gender!), \(userData.stature!)cm / \(userData.prefectures!)"
+        self.userLabel.text = "\(userData.name!) / \(userData.gender!) / \(userData.stature!)cm / \(userData.prefectures!)"
         
 
     }
