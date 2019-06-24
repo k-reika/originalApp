@@ -11,5 +11,6 @@ target 'originalApp' do
   pod 'Firebase/Database'
   pod 'SVProgressHUD','2.2.5'
   pod 'CLImageEditor/AllTools','0.2.3'
+  pod 'DZNEmptyDataSet'
 
 end

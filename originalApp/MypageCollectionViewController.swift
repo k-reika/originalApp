@@ -18,14 +18,10 @@ class MypageCollectionViewController: UIViewController {
     var iconimage: UIImage!
     var postArray: [PostData] = []
     
-    
-//    let ref = Database.database().reference()
-   
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-//    @IBOutlet weak var collectionImageView: UIImageView!
     @IBAction func settingButton(_ sender: Any) {
         let settingViewController = self.storyboard?.instantiateViewController(withIdentifier: "Setting")
         self.present(settingViewController!, animated: true, completion: nil)
@@ -42,6 +38,17 @@ class MypageCollectionViewController: UIViewController {
         super.viewWillAppear(animated)
         loadUserInfo()
         loadUserPostData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            // ログインしていないときの処理
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            self.present(loginViewController!, animated: true, completion: nil)
+        }
+        
     }
     
     func loadUserInfo(){
@@ -116,8 +123,6 @@ extension MypageCollectionViewController: UICollectionViewDataSource {
         
         let postData = postArray[indexPath.item]
         
-        
-        
         if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
             let cellimage = postData.image
             imageView.image = cellimage
@@ -137,7 +142,6 @@ extension MypageCollectionViewController: UICollectionViewDelegateFlowLayout {
         let height = width * 4 / 3
         print(height)
         return CGSize(width: width, height: height )
-        
     }
 }
 

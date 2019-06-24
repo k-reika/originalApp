@@ -11,13 +11,39 @@ import Firebase
 import FirebaseAuth
 import SVProgressHUD
 
+@IBDesignable class CustomButton: UIButton {
+    
+    // 角丸の半径(0で四角形)
+    @IBInspectable var cornerRadius: CGFloat = 2.0
+    
+    // 枠
+    @IBInspectable var borderColor: UIColor = UIColor.clear
+    @IBInspectable var borderWidth: CGFloat = 0.5
+    
+    override func draw(_ rect: CGRect) {
+        // 角丸
+        self.layer.cornerRadius = cornerRadius
+        self.clipsToBounds = (cornerRadius > 0)
+        
+        // 枠線
+        self.layer.borderColor = borderColor.cgColor
+        self.layer.borderWidth = borderWidth
+        
+        super.draw(rect)
+    }
+}
+
 class LoginViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    
     // ログインボタンをタップしたときに呼ばれるメソッド
     @IBAction func handleLoginButton(_ sender: Any) {
+        
         if let address = mailAddressTextField.text, let password = passwordTextField.text {
             
             // アドレスとパスワード名のいずれかでも入力されていない時は何もしない
@@ -88,8 +114,12 @@ class LoginViewController: UIViewController {
                         // HUDを消す
                         SVProgressHUD.dismiss()
                         
-                        // 画面を閉じてViewControllerに戻る
-                        self.dismiss(animated: true, completion: nil)
+//                        // 画面を閉じてViewControllerに戻る
+//                        self.dismiss(animated: true, completion: nil)
+                        
+                        // ログインしたら設定画面へ
+                        let settingViewController = self.storyboard?.instantiateViewController(withIdentifier: "Setting")
+                        self.present(settingViewController!, animated: true, completion: nil)
                     }
                 }
             }
@@ -98,6 +128,21 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 下線の幅と色
+        nameTextField.addBorderBottom(height: 1.0, color: UIColor.lightGray)
+        mailAddressTextField.addBorderBottom(height: 1.0, color: UIColor.lightGray)
+        passwordTextField.addBorderBottom(height: 1.0, color: UIColor.lightGray)
+        
     }
     
+}
+
+// 下線の設定
+extension UITextField {
+    func addBorderBottom(height: CGFloat, color: UIColor) {
+        let border = CALayer()
+        border.frame = CGRect(x: 0, y: self.frame.height - height, width: self.frame.width, height: height)
+        border.backgroundColor = color.cgColor
+        self.layer.addSublayer(border)
+    }
 }

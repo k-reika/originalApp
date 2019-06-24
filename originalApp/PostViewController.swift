@@ -33,6 +33,10 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        weatherTextField.addBorderBottom(height: 1.0, color: UIColor.lightGray)
+        temperatureTextField.addBorderBottom(height: 1.0, color: UIColor.lightGray)
+        weardateTextField.addBorderBottom(height: 1.0, color: UIColor.lightGray)
+        
         weatherpickerView.delegate = self
         weatherpickerView.dataSource = self
         weatherTextField.delegate = self
@@ -63,6 +67,17 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         // 選んだ日付
         selectedDate = weardatePicker.date
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            // ログインしていないときの処理
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            self.present(loginViewController!, animated: true, completion: nil)
+        }
+        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -148,9 +163,15 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         // 全てのモーダルを閉じる
         UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 
-
+//// 下線の設定
+//extension UITextField {
+//    func addBorderBottom(height: CGFloat, color: UIColor) {
+//        let border = CALayer()
+//        border.frame = CGRect(x: 0, y: self.frame.height - height, width: self.frame.width, height: height)
+//        border.backgroundColor = color.cgColor
+//        self.layer.addSublayer(border)
+//    }
+//}
 

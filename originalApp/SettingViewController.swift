@@ -28,40 +28,6 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var prefecturesTextField: UITextField!
     @IBOutlet weak var iconImageView: UIImageView!
     
-    @IBAction func iconImageChangeButton(_ sender: Any) {
-        // styleをActionSheetに設定
-        let alertSheet = UIAlertController(title: "", message: "プロフィール写真を変更", preferredStyle: UIAlertController.Style.actionSheet)
-        
-        // 自分の選択肢を生成
-        let action1 = UIAlertAction(title: "現在の画像を削除", style: UIAlertAction.Style.destructive, handler: {
-            (action: UIAlertAction!) in
-            self.iconImageView.image = nil
-            self.iconImageView.setNeedsDisplay()
-            self.iconImageView.layoutIfNeeded()
-        })
-        let action2 = UIAlertAction(title: "ライブラリから選択", style: UIAlertAction.Style.default, handler: {
-            (action: UIAlertAction!) in
-            // ライブラリ（カメラロール）を指定してピッカーを開く
-            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-                let pickerController = UIImagePickerController()
-                pickerController.delegate = self
-                pickerController.sourceType = .photoLibrary
-                self.present(pickerController, animated: true, completion: nil)
-            }
-        })
-        let action3 = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
-            (action: UIAlertAction!) in
-        })
-        
-        // アクションを追加.
-        alertSheet.addAction(action1)
-        alertSheet.addAction(action2)
-        alertSheet.addAction(action3)
-        
-        self.present(alertSheet, animated: true, completion: nil)
-
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,13 +70,34 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         iconimageView.image = iconimage
     }
     
-    @IBAction func handleChangeButton(_ sender: Any) {
-        // Firebaseに保存する
-        guard let uid =  Auth.auth().currentUser?.uid,  let name = Auth.auth().currentUser?.displayName else {
-            //ログイン画面表示
-            return
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 表示名を取得してTextFieldに設定する
+        let user = Auth.auth().currentUser
+        if let user = user {
+            displayNameTextField.text = user.displayName
         }
         
+        // すでに登録情報がある場合はデータを表示する
+        if let stature = statureTextField.text{
+            
+        }
+    }
+    
+    // Firebaseに保存する
+    @IBAction func handleChangeButton(_ sender: Any) {
+        
+        guard let uid =  Auth.auth().currentUser?.uid,  let name = Auth.auth().currentUser?.displayName else {
+            //ログイン画面表示
+            if Auth.auth().currentUser == nil {
+                // ログインしていないときの処理
+                let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+                self.present(loginViewController!, animated: true, completion: nil)
+            }
+            
+            return
+        }
         //入力がない時、ある時で分岐
         if  let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
             
@@ -121,16 +108,10 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 return
             }else{
                 // ImageViewから画像を取得する
-                
-                let image =  iconImageView.image
+                let image = iconImageView.image
                 let iconimageData = image!.jpegData(compressionQuality: 0.5)
                 let iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
-                
-//                if let image =  iconImageView.image {
-//                    let iconimageData = image.jpegData(compressionQuality: 0.5)
-//                    iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
-//
-               
+             
                 // 辞書を作成してFirebaseに保存する
                 let userRef = Database.database().reference().child(Users.UserPath).child(uid)
                 let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefectures":prefecturesTextField.text!, "name": name]
@@ -142,10 +123,13 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 // キーボードを閉じる
                 self.view.endEditing(true)
     
-                // 全てのモーダルを閉じる
-                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
-                
-                
+                if presentingViewController != nil {
+                    // 全てのモーダルを閉じる
+                    UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+                } else {
+                    navigationController?.popViewController(animated: true)
+                    
+                }
             }
         }
     }
@@ -161,20 +145,42 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         // ログイン画面から戻ってきた時のためにホーム画面（index = 0）を選択している状態にしておく
         self.navigationController!.tabBarController!.selectedIndex = 0
         
-        
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @IBAction func iconImageChangeButton(_ sender: Any) {
+        // styleをActionSheetに設定
+        let alertSheet = UIAlertController(title: "", message: "プロフィール写真を変更", preferredStyle: UIAlertController.Style.actionSheet)
         
-        // 表示名を取得してTextFieldに設定する
-        let user = Auth.auth().currentUser
-        if let user = user {
-            displayNameTextField.text = user.displayName
-        }
+        // 自分の選択肢を生成
+        let action1 = UIAlertAction(title: "現在の画像を削除", style: UIAlertAction.Style.destructive, handler: {
+            (action: UIAlertAction!) in
+            self.iconImageView.image = nil
+            self.iconImageView.setNeedsDisplay()
+            self.iconImageView.layoutIfNeeded()
+        })
+        let action2 = UIAlertAction(title: "ライブラリから選択", style: UIAlertAction.Style.default, handler: {
+            (action: UIAlertAction!) in
+            // ライブラリ（カメラロール）を指定してピッカーを開く
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                let pickerController = UIImagePickerController()
+                pickerController.delegate = self
+                pickerController.sourceType = .photoLibrary
+                self.present(pickerController, animated: true, completion: nil)
+            }
+        })
+        let action3 = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler: {
+            (action: UIAlertAction!) in
+        })
+        
+        // アクションを追加.
+        alertSheet.addAction(action1)
+        alertSheet.addAction(action2)
+        alertSheet.addAction(action3)
+        
+        self.present(alertSheet, animated: true, completion: nil)
+        
     }
-    
+
     // 表示する列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -220,7 +226,6 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // 閉じる
         picker.dismiss(animated: true, completion: nil)
@@ -235,11 +240,9 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
-    
     @objc private func done() {
         view.endEditing(true)
-//        genderTextField.resignFirstResponder()
-//        statureTextField.resignFirstResponder()
+
     }
     
     

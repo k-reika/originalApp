@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import SVProgressHUD
+import DZNEmptyDataSet
 
 class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
@@ -32,6 +33,10 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         searchBar.delegate = self
         searchBar.showsCancelButton = true
         
+        self.tableView.emptyDataSetSource = self as? DZNEmptyDataSetSource;
+        self.tableView.emptyDataSetDelegate = self as? DZNEmptyDataSetDelegate;
+        tableView.tableFooterView = UIView()
+        
         //プレースホルダの指定
         searchBar.placeholder = ""
         
@@ -47,6 +52,17 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("DEBUG_PRINT: viewWillAppear")
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            // ログインしていないときの処理
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            self.present(loginViewController!, animated: true, completion: nil)
+        }
         
     }
     
@@ -74,23 +90,27 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
                 
                 
             }
-            print(self.postArray)
-            // filterをかける
-            let result = self.postArray.filter {
-                $0.weather == searchBar.text!
+
+//            // filterをかける
+//            let result = self.postArray.filter {
+//                $0.weather == searchBar.text!
+//            }
+//
+//            self.postArray = result
+//            print(result)
+            
+            // 条件で絞り込む
+            var result: [PostData] = []
+            for post in self.postArray {
+                if post.weather == searchBar.text! || post.temperature == searchBar.text! || post.caption == searchBar.text! {
+                    result.append(post)
+                }
             }
             self.postArray = result
-            print(result)
             self.tableView.reloadData()
         })
-        
-        
-        let result = postArray.filter {
-            $0.weather == searchBar.text!
-        }
-        postArray = result
-        
         tableView.reloadData()
+        
         
     }
     
@@ -100,6 +120,7 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         self.view.endEditing(true)
         // 検索バーを空にする
         searchBar.text = ""
+        
         postArray = []
         // リロードを行う
         self.tableView.reloadData()
@@ -161,5 +182,18 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
             
         }
     }
+}
+
+// 検索結果なし
+extension SearchViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "baseline_search_black_18pt")
+    }
+    private func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "コンテンツは0件です"
+        let font = UIFont(name: "Sample Font Name", size: 30)!
+        return NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
+    }
+    
     
 }

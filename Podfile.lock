@@ -17,6 +17,7 @@ PODS:
     - CLImageEditor/Core
   - CLImageEditor/TextTool (0.2.3):
     - CLImageEditor/Core
+  - DZNEmptyDataSet (1.8.1)
   - Firebase/Auth (5.20.2):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.4.2)
@@ -89,6 +90,7 @@ PODS:
 
 DEPENDENCIES:
   - CLImageEditor/AllTools (= 0.2.3)
+  - DZNEmptyDataSet
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -97,6 +99,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - CLImageEditor
+    - DZNEmptyDataSet
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -113,6 +116,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   CLImageEditor: 8e50fa16d9230d5d4677a006bb2a2912079a17d8
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAuth: dd7bbf03a5aee0eafb3a1aee4d2812bd74bac890
@@ -127,6 +131,6 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: 1c852bae329325ef99871260419a7656155fa1be
+PODFILE CHECKSUM: 3dfca96d0f0cf9f925b370dabe67f00c907c9b76
 
 COCOAPODS: 1.6.1

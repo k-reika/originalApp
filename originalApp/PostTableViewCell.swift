@@ -45,8 +45,6 @@ class PostTableViewCell: UITableViewCell {
         let userRef = Database.database().reference().child(Users.UserPath).child(uid)
         userRef.observe(.value, with: { snapshot in
             
-//            print(snapshot)
-            
             let userData = UserData(snapshot: snapshot, myId: uid)
             self.setUserData(userData)
         })
@@ -56,11 +54,8 @@ class PostTableViewCell: UITableViewCell {
     // データをfirebaseから取得し、表示させる
     func setUserData(_ userData: UserData){
         self.iconImageView.image = userData.iconimage
-        print("〜アイコン〜")
         
-        self.userLabel.text = "\(userData.name!) / \(userData.gender!) / \(userData.stature!)cm / \(userData.prefectures!)"
-        
-
+        self.userLabel.text = "\(userData.name ?? "") / \(userData.gender ?? "") / \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
     }
     
     func setPostData(_ postData: PostData) {
@@ -73,7 +68,6 @@ class PostTableViewCell: UITableViewCell {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        //        let weardateString = formatter.string(from: postData.weardate!)
         if let weardate = postData.weardate {
             let weardateString = formatter.string(from: weardate)
             self.dateLabel.text = "着用日：\(weardateString), 天気：\(postData.weather!), 気温：\(postData.temperature!)"

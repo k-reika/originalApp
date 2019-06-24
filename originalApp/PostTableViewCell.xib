@@ -19,9 +19,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="506.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ibv-dw-qFx">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="ibv-dw-qFx">
                         <rect key="frame" x="10" y="10" width="40" height="40"/>
-                        <color key="backgroundColor" red="0.49301379919999999" green="0.68818801640000005" blue="0.79217296839999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="aFM-q6-Ii7"/>
                             <constraint firstAttribute="width" constant="40" id="iHv-UN-K3R"/>
@@ -72,6 +72,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="ibv-dw-qFx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="0nj-kx-FfF"/>
                     <constraint firstAttribute="trailingMargin" secondItem="HOY-JT-7f4" secondAttribute="trailing" constant="15" id="1Uf-Lc-BFn"/>
@@ -108,6 +109,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="baseline_account_box_black_18pt" width="36" height="36"/>
         <image name="like_none" width="40" height="40"/>
     </resources>
 </document>
