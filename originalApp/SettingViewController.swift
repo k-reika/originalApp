@@ -18,6 +18,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var genderpickerView: UIPickerView = UIPickerView()
     var prefecturespickerView: UIPickerView = UIPickerView()
     var iconimage: UIImage!
+    var userData: [UserData] = []
     
     let genderlist = ["","MEN","WOMEN"]
     let prefectureslist = ["","北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"]
@@ -65,8 +66,13 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             displayNameTextField.text = user.displayName
         }
         
+//        displayNameTextField.text = userData.name
+//        genderTextField.text = userData.gender
+//        prefecturesTextField.text = userData.prefectures
+//        statureTextField.text = userData.stature
+        
         let iconimageView = UIImageView()
-        let iconimage = UIImage(named: "baseline_account_box_black_36pt")
+        let iconimage = UIImage(named: "baseline_account_box_black_48pt")
         iconimageView.image = iconimage
     }
     
@@ -102,9 +108,16 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         if  let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
             
             // アドレスとパスワードと表示名のいずれかでも入力されていない時は何もしない
-            if stature.isEmpty || prefectures.isEmpty || displayName.isEmpty {
-                print("DEBUG_PRINT: 何かが空文字です。")
-                SVProgressHUD.showError(withStatus: "必要項目を入力して下さい")
+            if stature.isEmpty{
+                SVProgressHUD.showError(withStatus: "身長を入力して下さい")
+                return
+            }
+            if prefectures.isEmpty{
+                SVProgressHUD.showError(withStatus: "都道府県を入力して下さい")
+                return
+            }
+            if displayName.isEmpty {
+                SVProgressHUD.showError(withStatus: "名前を入力して下さい")
                 return
             }else{
                 // ImageViewから画像を取得する

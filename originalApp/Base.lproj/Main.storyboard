@@ -129,14 +129,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-e1-F8f">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-e1-F8f">
                                 <rect key="frame" x="93.5" y="50" width="188" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="Cug-Bl-lnG"/>
                                     <constraint firstAttribute="width" constant="188" id="Lpv-Bn-xJb"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sL7-9c-cfY">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sL7-9c-cfY">
                                 <rect key="frame" x="245" y="523.5" width="100" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Uz3-UJ-YVU"/>
@@ -145,7 +145,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pea-64-XBI">
+                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pea-64-XBI">
                                 <rect key="frame" x="245" y="568.5" width="100" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="XGD-Ul-xZA"/>
@@ -154,7 +154,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QPY-wp-hpk">
+                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QPY-wp-hpk">
                                 <rect key="frame" x="245" y="478.5" width="100" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="jZB-dt-kBC"/>
@@ -191,19 +191,19 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ez8-62-QU0" customClass="CustomButton" customModule="originalApp" customModuleProvider="target">
-                                <rect key="frame" x="20" y="50" width="60" height="30"/>
+                                <rect key="frame" x="60" y="606" width="100" height="40"/>
                                 <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="K2H-oN-FQa"/>
-                                    <constraint firstAttribute="height" constant="30" id="yFH-Eu-yn3"/>
+                                    <constraint firstAttribute="height" constant="40" id="lCt-lr-Rsk"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="qSz-Oj-5zb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="キャンセル">
                                     <color key="titleColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                         <real key="value" value="1"/>
@@ -214,32 +214,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="haundleCancelButton:" destination="7RD-UU-SGW" eventType="touchUpInside" id="pBA-Xa-oV0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRY-sS-bso" customClass="CustomButton" customModule="originalApp" customModuleProvider="target">
-                                <rect key="frame" x="295" y="50" width="60" height="30"/>
-                                <color key="backgroundColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="I3R-i4-ccy"/>
-                                    <constraint firstAttribute="height" constant="30" id="fbv-A6-L25"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <state key="normal" title="投稿">
-                                    <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="handlePostButton:" destination="7RD-UU-SGW" eventType="touchUpInside" id="Vlh-0l-LQU"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_wb_sunny_black_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="b5r-Ki-BmX">
@@ -266,14 +240,40 @@
                                     <constraint firstAttribute="height" constant="30" id="5Jf-0Q-E0u"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRY-sS-bso" customClass="CustomButton" customModule="originalApp" customModuleProvider="target">
+                                <rect key="frame" x="215" y="605.5" width="100" height="40"/>
+                                <color key="backgroundColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="kqn-ek-vce"/>
+                                    <constraint firstAttribute="height" constant="40" id="ymz-Kb-YOH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="投稿">
+                                    <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="handlePostButton:" destination="7RD-UU-SGW" eventType="touchUpInside" id="Vlh-0l-LQU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="TB4-q8-gBI" firstAttribute="trailing" secondItem="6tL-7h-BbG" secondAttribute="trailing" constant="30" id="1iB-xl-aaP"/>
+                            <constraint firstItem="ez8-62-QU0" firstAttribute="leading" secondItem="TB4-q8-gBI" secondAttribute="leading" constant="60" id="2Az-CF-IJn"/>
                             <constraint firstItem="XCX-e1-F8f" firstAttribute="top" secondItem="TB4-q8-gBI" secondAttribute="top" constant="30" id="2eB-LQ-wXb"/>
-                            <constraint firstItem="TB4-q8-gBI" firstAttribute="trailing" secondItem="nRY-sS-bso" secondAttribute="trailing" constant="20" id="2vC-5q-UqG"/>
-                            <constraint firstItem="XCX-e1-F8f" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ez8-62-QU0" secondAttribute="trailing" constant="8" symbolic="YES" id="3VY-gm-2eA"/>
-                            <constraint firstItem="XCX-e1-F8f" firstAttribute="top" secondItem="ez8-62-QU0" secondAttribute="top" id="4BJ-Jw-UZx"/>
+                            <constraint firstItem="nRY-sS-bso" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ez8-62-QU0" secondAttribute="trailing" constant="8" symbolic="YES" id="3hj-4d-xg8"/>
+                            <constraint firstItem="TB4-q8-gBI" firstAttribute="trailing" secondItem="nRY-sS-bso" secondAttribute="trailing" constant="60" id="4cc-dZ-anM"/>
                             <constraint firstItem="TB4-q8-gBI" firstAttribute="trailing" secondItem="QPY-wp-hpk" secondAttribute="trailing" constant="30" id="6hs-Wa-hnz"/>
                             <constraint firstItem="TMM-FO-baz" firstAttribute="centerY" secondItem="o25-7t-ade" secondAttribute="centerY" id="6pw-mJ-3TJ"/>
                             <constraint firstItem="BMY-q1-k7f" firstAttribute="centerY" secondItem="0vQ-6c-glv" secondAttribute="centerY" id="7II-fZ-YKI"/>
@@ -286,12 +286,11 @@
                             <constraint firstItem="QPY-wp-hpk" firstAttribute="centerY" secondItem="b5r-Ki-BmX" secondAttribute="centerY" id="YD6-1u-x0y"/>
                             <constraint firstItem="gjs-jz-8Jk" firstAttribute="leading" secondItem="b5r-Ki-BmX" secondAttribute="trailing" constant="15" id="YbW-OJ-fcZ"/>
                             <constraint firstItem="XCX-e1-F8f" firstAttribute="centerX" secondItem="7Ue-xG-GfQ" secondAttribute="centerX" id="YvZ-NI-ooy"/>
+                            <constraint firstItem="ez8-62-QU0" firstAttribute="top" secondItem="TMM-FO-baz" secondAttribute="bottom" constant="20" id="ZQq-e9-IAx"/>
                             <constraint firstItem="TB4-q8-gBI" firstAttribute="trailing" secondItem="Pea-64-XBI" secondAttribute="trailing" constant="30" id="Zu9-9Z-Phx"/>
                             <constraint firstItem="0vQ-6c-glv" firstAttribute="top" secondItem="b5r-Ki-BmX" secondAttribute="bottom" constant="15" id="bDr-1o-rC3"/>
-                            <constraint firstItem="nRY-sS-bso" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XCX-e1-F8f" secondAttribute="trailing" constant="8" symbolic="YES" id="bUS-Za-hpX"/>
                             <constraint firstItem="sL7-9c-cfY" firstAttribute="centerY" secondItem="0vQ-6c-glv" secondAttribute="centerY" id="bVI-92-il3"/>
                             <constraint firstItem="o25-7t-ade" firstAttribute="leading" secondItem="b5r-Ki-BmX" secondAttribute="leading" id="bXn-Jz-2ug"/>
-                            <constraint firstItem="nRY-sS-bso" firstAttribute="top" secondItem="ez8-62-QU0" secondAttribute="top" id="c6Y-if-rId"/>
                             <constraint firstItem="QPY-wp-hpk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gjs-jz-8Jk" secondAttribute="trailing" constant="8" symbolic="YES" id="cnH-SM-9Gq"/>
                             <constraint firstItem="Pea-64-XBI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TMM-FO-baz" secondAttribute="trailing" constant="8" symbolic="YES" id="crA-P2-X3j"/>
                             <constraint firstItem="TB4-q8-gBI" firstAttribute="bottom" secondItem="o25-7t-ade" secondAttribute="bottom" constant="75" id="gMb-pc-fsT"/>
@@ -299,7 +298,7 @@
                             <constraint firstItem="sL7-9c-cfY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BMY-q1-k7f" secondAttribute="trailing" constant="8" symbolic="YES" id="kMs-Xp-ZKD"/>
                             <constraint firstItem="TB4-q8-gBI" firstAttribute="trailing" secondItem="sL7-9c-cfY" secondAttribute="trailing" constant="30" id="ljo-7I-fIR"/>
                             <constraint firstItem="gjs-jz-8Jk" firstAttribute="centerY" secondItem="b5r-Ki-BmX" secondAttribute="centerY" id="lr5-pd-Tg3"/>
-                            <constraint firstItem="ez8-62-QU0" firstAttribute="leading" secondItem="TB4-q8-gBI" secondAttribute="leading" constant="20" id="mlg-RK-DNY"/>
+                            <constraint firstItem="nRY-sS-bso" firstAttribute="top" secondItem="Pea-64-XBI" secondAttribute="bottom" constant="20" id="nsc-ex-uGq"/>
                             <constraint firstItem="o25-7t-ade" firstAttribute="top" secondItem="0vQ-6c-glv" secondAttribute="bottom" constant="15" id="t5I-bZ-AOC"/>
                             <constraint firstItem="6tL-7h-BbG" firstAttribute="leading" secondItem="TB4-q8-gBI" secondAttribute="leading" constant="30" id="tFv-vM-89K"/>
                         </constraints>
@@ -357,7 +356,7 @@
             </objects>
             <point key="canvasLocation" x="2749.5999999999999" y="330.58470764617692"/>
         </scene>
-        <!--投稿-->
+        <!--Image Select View Controller-->
         <scene sceneID="FAI-ty-voC">
             <objects>
                 <viewController storyboardIdentifier="ImageSelect" id="dwY-6n-gTv" customClass="ImageSelectViewController" customModule="originalApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -448,7 +447,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xDt-wG-LVb"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="投稿" image="baseline_add_box_black_18pt" id="MeE-J0-ZdW"/>
+                    <tabBarItem key="tabBarItem" title="" image="baseline_add_box_black_36pt" selectedImage="baseline_add_box_black_36pt" id="MeE-J0-ZdW">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wb8-Zr-aZw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -513,7 +514,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="91t-sg-sjv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_48pt" translatesAutoresizingMaskIntoConstraints="NO" id="91t-sg-sjv">
                                 <rect key="frame" x="25" y="89" width="60" height="60"/>
                                 <color key="tintColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -532,7 +533,7 @@
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BtJ-Jr-Avr">
                                 <rect key="frame" x="0.0" y="174" width="375" height="444"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="KnI-mY-OaU">
                                     <size key="itemSize" width="157" height="189"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -582,7 +583,8 @@
                         <viewLayoutGuide key="safeArea" id="VYV-OU-eG8"/>
                     </view>
                     <navigationItem key="navigationItem" id="VTB-kQ-5BB">
-                        <barButtonItem key="rightBarButtonItem" image="baseline_edit_black_18pt" style="done" id="Vsp-wT-xgt">
+                        <barButtonItem key="rightBarButtonItem" image="baseline_settings_black_24pt" style="done" id="Vsp-wT-xgt">
+                            <color key="tintColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="settingButton:" destination="lOq-gj-CRs" id="5gP-k3-ubP"/>
                                 <segue destination="ICq-65-KwW" kind="show" id="ha2-tO-fEt"/>
@@ -607,7 +609,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xsI-sE-qI0">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="アカウント名を入力" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xsI-sE-qI0">
                                 <rect key="frame" x="195" y="255.5" width="150" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="0fk-xV-1aq"/>
@@ -634,7 +636,7 @@
                                 <color key="textColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fw9-mH-Kak">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="性別を選択" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fw9-mH-Kak">
                                 <rect key="frame" x="195" y="296.5" width="150" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="soQ-1R-ABx"/>
@@ -643,7 +645,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="47P-Kl-Yp2">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="身長を入力" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="47P-Kl-Yp2">
                                 <rect key="frame" x="195" y="337.5" width="150" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="pl6-27-jax"/>
@@ -652,7 +654,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WOh-g9-037">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="都道府県を選択" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WOh-g9-037">
                                 <rect key="frame" x="195" y="378.5" width="150" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Zea-gw-V9c"/>
@@ -691,7 +693,7 @@
                                 <color key="textColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="132-q8-KMQ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_48pt" translatesAutoresizingMaskIntoConstraints="NO" id="132-q8-KMQ">
                                 <rect key="frame" x="137.5" y="89" width="100" height="100"/>
                                 <color key="tintColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -782,11 +784,13 @@
             </objects>
             <point key="canvasLocation" x="3514" y="1093"/>
         </scene>
-        <!--検索-->
+        <!--Navigation Controller-->
         <scene sceneID="OV8-bo-9mz">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TUA-Yk-sOd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="検索" image="baseline_search_black_18pt" id="bYL-tz-a2p"/>
+                    <tabBarItem key="tabBarItem" title="" image="baseline_search_black_36pt" selectedImage="baseline_search_black_36pt" id="bYL-tz-a2p">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nBb-yu-AGx">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -801,11 +805,13 @@
             </objects>
             <point key="canvasLocation" x="2033" y="331"/>
         </scene>
-        <!--マイページ-->
+        <!--Navigation Controller-->
         <scene sceneID="v9X-6Q-ODu">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wFh-yS-eHr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="マイページ" image="baseline_account_box_black_18pt" id="1Qt-Yz-JC4"/>
+                    <tabBarItem key="tabBarItem" title="" image="baseline_account_box_black_36pt" selectedImage="baseline_account_box_black_36pt" id="1Qt-Yz-JC4">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0IB-aP-MDg">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -820,11 +826,13 @@
             </objects>
             <point key="canvasLocation" x="2033" y="1093"/>
         </scene>
-        <!--ホーム-->
+        <!--Navigation Controller-->
         <scene sceneID="yKl-Xb-RAo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ETj-6b-d4f" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="ホーム" image="baseline_star_black_18pt" id="Rag-a1-4TJ"/>
+                    <tabBarItem key="tabBarItem" title="" image="baseline_home_black_36pt" selectedImage="baseline_home_black_36pt" id="Rag-a1-4TJ">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0gI-rl-g2E">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -841,13 +849,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="baseline_account_box_black_18pt" width="36" height="36"/>
-        <image name="baseline_add_box_black_18pt" width="36" height="36"/>
+        <image name="baseline_account_box_black_36pt" width="72" height="72"/>
+        <image name="baseline_account_box_black_48pt" width="96" height="96"/>
+        <image name="baseline_add_box_black_36pt" width="72" height="72"/>
         <image name="baseline_bar_chart_black_18pt" width="36" height="36"/>
         <image name="baseline_date_range_black_18pt" width="36" height="36"/>
-        <image name="baseline_edit_black_18pt" width="36" height="36"/>
-        <image name="baseline_search_black_18pt" width="36" height="36"/>
-        <image name="baseline_star_black_18pt" width="36" height="36"/>
+        <image name="baseline_home_black_36pt" width="72" height="72"/>
+        <image name="baseline_search_black_36pt" width="72" height="72"/>
+        <image name="baseline_settings_black_24pt" width="48" height="48"/>
         <image name="baseline_wb_sunny_black_18pt" width="36" height="36"/>
     </resources>
 </document>

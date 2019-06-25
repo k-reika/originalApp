@@ -26,15 +26,14 @@ class KerningLabel: UILabel {
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
-    
     var postArray: [PostData] = []
     var userArray: [UserData] = []
     
     // DatabaseのobserveEventの登録状態を表す
     var observing = false
     
-    
+    @IBOutlet weak var tableView: UITableView!
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -49,6 +48,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // タイトルをセット
+        self.navigationItem.title = "Vestiti"
+        
+        // フォント種をTime New Roman、サイズを10に指定
+        self.navigationController?.navigationBar.titleTextAttributes
+            = [NSAttributedString.Key.font: UIFont(name: "Sinhala Sangam MN", size: 20)!]
+
         
         tableView.delegate = self
         tableView.dataSource = self

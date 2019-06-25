@@ -91,7 +91,7 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
                 
             }
 
-//            // filterをかける
+            // filterをかける
 //            let result = self.postArray.filter {
 //                $0.weather == searchBar.text!
 //            }

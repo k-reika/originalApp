@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import SVProgressHUD
+import DZNEmptyDataSet
 
 private let reuseIdentifier = "Cell"
 
@@ -17,6 +18,7 @@ class MypageCollectionViewController: UIViewController {
     
     var iconimage: UIImage!
     var postArray: [PostData] = []
+    var userData: [UserData] = []
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
@@ -32,6 +34,10 @@ class MypageCollectionViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        collectionView.emptyDataSetSource = self
+        collectionView.emptyDataSetDelegate = self
+//        collectionView.tableFooterView = UIView()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +56,12 @@ class MypageCollectionViewController: UIViewController {
         }
         
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let next = segue.destination as? SettingViewController
+//        let _ = next?.view
+//        next?.textField3.text = textField.text
+//    }
     
     func loadUserInfo(){
         guard let uid =  Auth.auth().currentUser?.uid else {
@@ -151,6 +163,19 @@ extension MypageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         
+    }
+}
+
+// 検索結果なしの時に表示したい
+extension MypageCollectionViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "baseline_folder_open_black_36pt")
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "まだ投稿がありません"
+        let font = UIFont.boldSystemFont(ofSize: 20)
+        return NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
     }
 }
 

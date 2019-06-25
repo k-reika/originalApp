@@ -12,7 +12,7 @@ import Firebase
 import FirebaseAuth
 import SVProgressHUD
 
-class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     var image: UIImage!
     var weatherpickerView: UIPickerView = UIPickerView()
@@ -27,7 +27,11 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var captionTextView: UITextView!
     @IBOutlet weak var weatherTextField: UITextField!
-    @IBOutlet weak var temperatureTextField: UITextField!
+    @IBOutlet weak var temperatureTextField: UITextField!{
+        didSet {
+            temperatureTextField.delegate = self
+        }
+    }
     @IBOutlet weak var weardateTextField: UITextField!
     
     override func viewDidLoad() {
@@ -78,6 +82,61 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             self.present(loginViewController!, animated: true, completion: nil)
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureObserver()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Notificationを画面が消えるときに削除
+        self.removeObserver()
+    }
+    
+    // Notificationを設定
+    func configureObserver() {
+//        let notification = NotificationCenter.default
+//        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+//        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver( self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil) //You can substitute UIResponder with any of it's subclass
+        NotificationCenter.default.addObserver( self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+    }
+    
+    // Notificationを削除
+    func removeObserver() {
+        
+        let notification = NotificationCenter.default
+        notification.removeObserver(self)
+    }
+    
+    // キーボードが現れた時に、画面全体をずらす。
+    @objc func keyboardWillShow(notification: Notification?) {
+        
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            self.view.transform = transform
+            
+        })
+    }
+    
+    // キーボードが消えたときに、画面を戻す
+    @objc func keyboardWillHide(notification: Notification?) {
+        
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            
+            self.view.transform = CGAffineTransform.identity
+        })
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
+        return true
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

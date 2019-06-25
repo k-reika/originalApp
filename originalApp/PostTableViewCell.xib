@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="506.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="ibv-dw-qFx">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="baseline_account_box_black_48pt" translatesAutoresizingMaskIntoConstraints="NO" id="ibv-dw-qFx">
                         <rect key="frame" x="10" y="10" width="40" height="40"/>
                         <color key="tintColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -109,7 +109,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="baseline_account_box_black_18pt" width="36" height="36"/>
+        <image name="baseline_account_box_black_48pt" width="96" height="96"/>
         <image name="like_none" width="40" height="40"/>
     </resources>
 </document>
