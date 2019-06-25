@@ -66,7 +66,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
         
         let iconimageView = UIImageView()
-        let iconimage = UIImage(named: "baseline_account_box_black_18pt")
+        let iconimage = UIImage(named: "baseline_account_box_black_36pt")
         iconimageView.image = iconimage
     }
     
@@ -79,10 +79,10 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             displayNameTextField.text = user.displayName
         }
         
-        // すでに登録情報がある場合はデータを表示する
-        if let stature = statureTextField.text{
-            
-        }
+//        // すでに登録情報がある場合はデータを表示する
+//        if let stature = statureTextField.text{
+//
+//        }
     }
     
     // Firebaseに保存する

@@ -33,8 +33,8 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         searchBar.delegate = self
         searchBar.showsCancelButton = true
         
-        self.tableView.emptyDataSetSource = self as? DZNEmptyDataSetSource;
-        self.tableView.emptyDataSetDelegate = self as? DZNEmptyDataSetDelegate;
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
         
         //プレースホルダの指定
@@ -184,16 +184,14 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
     }
 }
 
-// 検索結果なし
+// 検索結果なしの時に表示したい
 extension SearchViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
-        return UIImage(named: "baseline_search_black_18pt")
+        return UIImage(named: "baseline_search_black_36pt")
     }
-    private func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
-        let text = "コンテンツは0件です"
-        let font = UIFont(name: "Sample Font Name", size: 30)!
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "検索結果は0件です"
+        let font = UIFont.boldSystemFont(ofSize: 20)
         return NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
     }
-    
-    
 }

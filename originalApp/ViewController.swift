@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import DZNEmptyDataSet
 
 @IBDesignable
 class KerningLabel: UILabel {
@@ -42,6 +43,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
             self.present(loginViewController!, animated: true, completion: nil)
         }
+    
         
     }
     
@@ -50,6 +52,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
         
         // テーブルセルのタップを無効にする
         tableView.allowsSelection = false
@@ -186,4 +192,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
 }
+
+extension ViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "baseline_folder_open_black_36pt")
+    }
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let text = "まだ投稿がありません"
+        let font = UIFont.boldSystemFont(ofSize: 20)
+        return NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
+    }
+}
+
 
