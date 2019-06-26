@@ -46,10 +46,11 @@
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BAj-YP-ZNq" customClass="CustomButton" customModule="originalApp" customModuleProvider="target">
-                                <rect key="frame" x="50" y="271" width="120" height="30"/>
+                                <rect key="frame" x="50" y="271" width="120" height="40"/>
                                 <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="oEl-G6-JDB"/>
+                                    <constraint firstAttribute="height" constant="40" id="tg9-Hy-RiY"/>
                                 </constraints>
                                 <state key="normal" title="新規登録">
                                     <color key="titleColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -62,7 +63,7 @@
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
+                                        <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -70,10 +71,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTe-7N-aQN" customClass="CustomButton" customModule="originalApp" customModuleProvider="target">
-                                <rect key="frame" x="205" y="271" width="120" height="30"/>
+                                <rect key="frame" x="205" y="271" width="120" height="40"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.1960784314" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="odT-jc-efQ"/>
+                                    <constraint firstAttribute="height" constant="40" id="xpo-U9-5fW"/>
                                 </constraints>
                                 <state key="normal" title="ログイン">
                                     <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -86,7 +88,7 @@
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
+                                        <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -119,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="100" y="331"/>
+            <point key="canvasLocation" x="100" y="330.58470764617692"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="6V6-bu-ZiB">
@@ -129,7 +131,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-e1-F8f">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XCX-e1-F8f">
                                 <rect key="frame" x="93.5" y="50" width="188" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="Cug-Bl-lnG"/>

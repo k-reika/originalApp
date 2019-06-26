@@ -96,11 +96,8 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     // Notificationを設定
     func configureObserver() {
-//        let notification = NotificationCenter.default
-//        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
-//        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver( self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil) //You can substitute UIResponder with any of it's subclass
-        NotificationCenter.default.addObserver( self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver( self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
     }
     

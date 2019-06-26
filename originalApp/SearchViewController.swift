@@ -18,9 +18,10 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var postAllArray: [PostData] = []
     var postArray: [PostData] = []
     var mySearchBar: UISearchBar!
-    var observe = false
+    var observing = false
     
     override func viewDidLoad() {
         
@@ -53,6 +54,70 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         super.viewWillAppear(animated)
         print("DEBUG_PRINT: viewWillAppear")
         
+        if Auth.auth().currentUser != nil {
+            if self.observing == false {
+                // 要素が追加されたらpostArrayに追加してTableViewを再表示する
+                let postsRef = Database.database().reference().child(Const.PostPath)
+                postsRef.observe(.childAdded, with: { snapshot in
+                    print("DEBUG_PRINT: .childAddedイベントが発生しました。")
+                    
+                    // PostDataクラスを生成して受け取ったデータを設定する
+                    if let uid = Auth.auth().currentUser?.uid {
+                        let postData = PostData(snapshot: snapshot, myId: uid)
+                        self.postArray.insert(postData, at: 0)
+                        
+                        // TableViewを再表示する
+                        self.tableView.reloadData()
+                    }
+                })
+                // 要素が変更されたら該当のデータをpostArrayから一度削除した後に新しいデータを追加してTableViewを再表示する
+                postsRef.observe(.childChanged, with: { snapshot in
+                    print("DEBUG_PRINT: .childChangedイベントが発生しました。")
+                    
+                    if let uid = Auth.auth().currentUser?.uid {
+                        // PostDataクラスを生成して受け取ったデータを設定する
+                        let postData = PostData(snapshot: snapshot, myId: uid)
+                        
+                        // 保持している配列からidが同じものを探す
+                        var index: Int = 0
+                        for post in self.postArray {
+                            if post.id == postData.id {
+                                index = self.postArray.index(of: post)!
+                                break
+                            }
+                        }
+                        
+                        // 差し替えるため一度削除する
+                        self.postArray.remove(at: index)
+                        
+                        // 削除したところに更新済みのデータを追加する
+                        self.postArray.insert(postData, at: index)
+                        
+                        // TableViewを再表示する
+                        self.tableView.reloadData()
+                    }
+                })
+                
+                // DatabaseのobserveEventが上記コードにより登録されたため
+                // trueとする
+                observing = true
+            }
+        } else {
+            if observing == true {
+                // ログアウトを検出したら、一旦テーブルをクリアしてオブザーバーを削除する。
+                // テーブルをクリアする
+                postArray = []
+                
+                tableView.reloadData()
+                // オブザーバーを削除する
+                Database.database().reference().removeAllObservers()
+                
+                // DatabaseのobserveEventが上記コードにより解除されたため
+                // falseとする
+                observing = false
+            }
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,15 +129,32 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
             self.present(loginViewController!, animated: true, completion: nil)
         }
         
+        loadData()
+
+        
     }
     
     // サーチボタンをクリックすると呼び出される
     func searchBarSearchButtonClicked(_ searchBar:UISearchBar) {
+        
         self.view.endEditing(true)
         searchBar.showsCancelButton = true
         
         postArray = []
         
+        // 条件で絞り込む
+        var result: [PostData] = []
+        for post in self.postAllArray {
+            if post.weather == searchBar.text! || post.temperature == searchBar.text! || post.caption == searchBar.text! {
+                result.append(post)
+            }
+        }
+        postArray = result
+        tableView.reloadData()
+        
+    }
+    
+    func loadData() {
         // uidのnilチェック
         guard let uid = Auth.auth().currentUser?.uid else {
             return
@@ -82,7 +164,7 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         // uidと一致するものを見つける
         let query = postRef.queryOrdered(byChild: "userid").queryEqual(toValue: uid)
         query.observeSingleEvent(of:.value, with: { snapshots in
-
+            
             for snapshot in snapshots.children {
                 guard let snapshot = snapshot as? DataSnapshot else { continue }
                 let postData = PostData(snapshot: snapshot, myId: uid)
@@ -90,30 +172,21 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
                 
                 
             }
-
-            // filterをかける
-//            let result = self.postArray.filter {
-//                $0.weather == searchBar.text!
-//            }
-//
-//            self.postArray = result
-//            print(result)
             
-            // 条件で絞り込む
-            var result: [PostData] = []
-            for post in self.postArray {
-                if post.weather == searchBar.text! || post.temperature == searchBar.text! || post.caption == searchBar.text! {
-                    result.append(post)
-                }
-            }
-            self.postArray = result
+            //            // filterをかける
+            //            let result = self.postArray.filter {
+            //                $0.weather == searchBar.text!
+            //            }
+            //
+            //            self.postArray = result
+            //            print(result)
+            self.postAllArray = self.postArray
             self.tableView.reloadData()
         })
-        tableView.reloadData()
-        
         
     }
     
+    //サーチバーのキャンセルボタンをクリックした時に呼ばれる
     //サーチバーのキャンセルボタンをクリックした時に呼ばれる
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         // 画面を閉じる
@@ -121,7 +194,7 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         // 検索バーを空にする
         searchBar.text = ""
         
-        postArray = []
+        postArray = self.postAllArray
         // リロードを行う
         self.tableView.reloadData()
         

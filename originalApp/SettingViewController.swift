@@ -18,7 +18,6 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var genderpickerView: UIPickerView = UIPickerView()
     var prefecturespickerView: UIPickerView = UIPickerView()
     var iconimage: UIImage!
-    var userData: [UserData] = []
     
     let genderlist = ["","MEN","WOMEN"]
     let prefectureslist = ["","北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"]
@@ -61,40 +60,35 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         genderTextField.inputAccessoryView = toolbar
         prefecturesTextField.inputAccessoryView = toolbar
         
-        let user = Auth.auth().currentUser
-        if let user = user {
-            displayNameTextField.text = user.displayName
-        }
         
-//        displayNameTextField.text = userData.name
-//        genderTextField.text = userData.gender
-//        prefecturesTextField.text = userData.prefectures
-//        statureTextField.text = userData.stature
         
-        let iconimageView = UIImageView()
-        let iconimage = UIImage(named: "baseline_account_box_black_48pt")
-        iconimageView.image = iconimage
+//        if let gender = userData?.gender, let prefectures = userData?.prefectures  {
+//            let index = genderlist.index(of: gender) ?? 1
+//            genderpickerView.selectRow(index, inComponent: 0, animated: true)
+//
+//            let pIndex = prefectureslist.index(of: prefectures) ?? 1
+//            // はじめに表示する項目を指定
+//            prefecturespickerView.selectRow(pIndex, inComponent: 0, animated: true)
+//        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        loadUserInfo()
         // 表示名を取得してTextFieldに設定する
         let user = Auth.auth().currentUser
         if let user = user {
             displayNameTextField.text = user.displayName
         }
         
-//        // すでに登録情報がある場合はデータを表示する
-//        if let stature = statureTextField.text{
-//
-//        }
+
     }
     
     // Firebaseに保存する
     @IBAction func handleChangeButton(_ sender: Any) {
         
-        guard let uid =  Auth.auth().currentUser?.uid,  let name = Auth.auth().currentUser?.displayName else {
+        guard let uid =  Auth.auth().currentUser?.uid,  let displayName = Auth.auth().currentUser?.displayName else {
             //ログイン画面表示
             if Auth.auth().currentUser == nil {
                 // ログインしていないときの処理
@@ -105,29 +99,27 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             return
         }
         //入力がない時、ある時で分岐
-        if  let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
+        if let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
             
             // アドレスとパスワードと表示名のいずれかでも入力されていない時は何もしない
             if stature.isEmpty{
                 SVProgressHUD.showError(withStatus: "身長を入力して下さい")
                 return
-            }
-            if prefectures.isEmpty{
+            }else if prefectures.isEmpty{
                 SVProgressHUD.showError(withStatus: "都道府県を入力して下さい")
                 return
-            }
-            if displayName.isEmpty {
+            }else if displayName.isEmpty {
                 SVProgressHUD.showError(withStatus: "名前を入力して下さい")
                 return
             }else{
                 // ImageViewから画像を取得する
                 let image = iconImageView.image
-                let iconimageData = image!.jpegData(compressionQuality: 0.5)
-                let iconimageString = iconimageData!.base64EncodedString(options: .lineLength64Characters)
+                let iconimageData = image?.jpegData(compressionQuality: 0.5)
+                let iconimageString = iconimageData?.base64EncodedString(options: .lineLength64Characters)
              
                 // 辞書を作成してFirebaseに保存する
                 let userRef = Database.database().reference().child(Users.UserPath).child(uid)
-                let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefectures":prefecturesTextField.text!, "name": name]
+                let userDic = ["iconimage": iconimageString, "gender": genderTextField.text!,"stature": statureTextField.text!,"prefectures":prefecturesTextField.text!, "name": displayName]
                 userRef.setValue(userDic)
                 
                 // HUDで投稿完了を表示する
@@ -250,7 +242,11 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         iconImageView.image = SelectImage
        
         // 全てのモーダルを閉じる
-        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+//        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+        
+        // 戻る
+        editor.dismiss(animated: true, completion: nil)
+        
     }
     
     @objc private func done() {
@@ -258,6 +254,33 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
     }
     
+    func loadUserInfo(){
+        guard let uid =  Auth.auth().currentUser?.uid else {
+            //ログイン画面表示
+            return
+        }
+        let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+        userRef.observe(.value, with: { snapshot in
+            
+            let userData = UserData(snapshot: snapshot, myId: uid)
+            self.setUserData(userData)
+        })
+        
+    }
+    // データをfirebaseから取得し、表示させる
+    func setUserData(_ userData: UserData){
+        //firebaseにデータがある時
+        if userData.iconimage == nil{
+            let iconimageView = UIImageView()
+            let iconimage = UIImage(named: "baseline_account_box_black_48pt")
+            iconimageView.image = iconimage
+        }else{
+            self.iconImageView.image = userData.iconimage
+        }
+        genderTextField.text = "\(userData.gender ?? "")"
+        statureTextField.text = "\(userData.stature ?? "")"
+        prefecturesTextField.text = "\(userData.prefectures ?? "")"
+    }
     
     
    

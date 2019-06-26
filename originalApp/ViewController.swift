@@ -33,18 +33,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var observing = false
     
     @IBOutlet weak var tableView: UITableView!
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if Auth.auth().currentUser == nil {
-            // ログインしていないときの処理
-            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
-            self.present(loginViewController!, animated: true, completion: nil)
-        }
-    
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // フォント種をTime New Roman、サイズを10に指定
         self.navigationController?.navigationBar.titleTextAttributes
-            = [NSAttributedString.Key.font: UIFont(name: "Sinhala Sangam MN", size: 20)!]
+            = [NSAttributedString.Key.font: UIFont(name: "Sinhala Sangam MN", size: 15)!]
 
         
         tableView.delegate = self
@@ -145,6 +133,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            // ログインしていないときの処理
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            self.present(loginViewController!, animated: true, completion: nil)
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
          return postArray.count

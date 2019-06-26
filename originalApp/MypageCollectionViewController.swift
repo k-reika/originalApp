@@ -18,7 +18,6 @@ class MypageCollectionViewController: UIViewController {
     
     var iconimage: UIImage!
     var postArray: [PostData] = []
-    var userData: [UserData] = []
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
@@ -37,9 +36,9 @@ class MypageCollectionViewController: UIViewController {
         
         collectionView.emptyDataSetSource = self
         collectionView.emptyDataSetDelegate = self
-//        collectionView.tableFooterView = UIView()
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadUserInfo()
@@ -57,12 +56,6 @@ class MypageCollectionViewController: UIViewController {
         
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let next = segue.destination as? SettingViewController
-//        let _ = next?.view
-//        next?.textField3.text = textField.text
-//    }
-    
     func loadUserInfo(){
         guard let uid =  Auth.auth().currentUser?.uid else {
             //ログイン画面表示
@@ -79,7 +72,6 @@ class MypageCollectionViewController: UIViewController {
     
     // データをfirebaseから取得し、表示させる
     func setUserData(_ userData: UserData){
-        
         //firebaseにデータがある時
         self.iconImageView.image = userData.iconimage
         /// プロフィールを表示
@@ -97,9 +89,7 @@ class MypageCollectionViewController: UIViewController {
         // uidと一致するものを見つける
         let query = postRef.queryOrdered(byChild: "userid").queryEqual(toValue: uid)
         query.observeSingleEvent(of:.value, with: { snapshots in
-            
-//            print(snapshots)
-            
+    
             for snapshot in snapshots.children {
                 guard let snapshot = snapshot as? DataSnapshot else { continue }
                 let postData = PostData(snapshot: snapshot, myId: uid)
@@ -107,11 +97,18 @@ class MypageCollectionViewController: UIViewController {
             }
             self.collectionView.reloadData()
         })
-        
-        
         // collectionviewを更新する
         self.collectionView.reloadData()
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        self.setUserData(userData!)
+//        print(self.userData ?? "マイページdataなし")
+//        if let viewController = segue.destination as? SettingViewController {
+//            viewController.userData = self.userData
+//            print(self.userData ?? "マイページdataなし")
+//        }
+//    }
 }
 
 // MARK: UICollectionViewDataSource
