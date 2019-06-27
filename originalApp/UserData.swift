@@ -11,6 +11,7 @@ import Firebase
 import FirebaseDatabase
 
 class UserData: NSObject {
+    var userId: String?
     var iconimage: UIImage?
     var iconimageString: String?
     var name: String?
@@ -31,6 +32,8 @@ class UserData: NSObject {
                 self.iconimage = UIImage(data: data)
             }
         }
+        
+        userId = myId
         
         self.name = valueDictionary["name"] as? String ?? ""
         

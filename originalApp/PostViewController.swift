@@ -165,6 +165,7 @@ class PostViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     // UIDatePickerのDoneを押したら
     @objc func done() {
+
         if activeTextFiled == weatherTextField {
             weatherTextField.resignFirstResponder()
             // weatherTextField.text = weatherpickerView.selectedRow(inComponent: )

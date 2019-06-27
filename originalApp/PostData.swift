@@ -15,6 +15,7 @@ class PostData: NSObject {
     var userid: String?
     var image: UIImage?
     var imageString: String?
+    var name: String?
     
     var caption: String?
     var weather: String?
@@ -33,6 +34,8 @@ class PostData: NSObject {
         image = UIImage(data: Data(base64Encoded: imageString!, options: .ignoreUnknownCharacters)!)
         
         self.userid = valueDictionary["userid"] as? String
+        
+        self.name = valueDictionary["name"] as? String
         
         self.caption = valueDictionary["caption"] as? String
         

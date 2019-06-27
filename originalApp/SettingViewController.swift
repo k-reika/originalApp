@@ -18,6 +18,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var genderpickerView: UIPickerView = UIPickerView()
     var prefecturespickerView: UIPickerView = UIPickerView()
     var iconimage: UIImage!
+    var userData: UserData?
     
     let genderlist = ["","MEN","WOMEN"]
     let prefectureslist = ["","北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"]
@@ -60,28 +61,14 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         genderTextField.inputAccessoryView = toolbar
         prefecturesTextField.inputAccessoryView = toolbar
         
-        
-        
-//        if let gender = userData?.gender, let prefectures = userData?.prefectures  {
-//            let index = genderlist.index(of: gender) ?? 1
-//            genderpickerView.selectRow(index, inComponent: 0, animated: true)
-//
-//            let pIndex = prefectureslist.index(of: prefectures) ?? 1
-//            // はじめに表示する項目を指定
-//            prefecturespickerView.selectRow(pIndex, inComponent: 0, animated: true)
-//        }
+        if let userData = userData {
+            setUserData(userData)
+        }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadUserInfo()
-        // 表示名を取得してTextFieldに設定する
-        let user = Auth.auth().currentUser
-        if let user = user {
-            displayNameTextField.text = user.displayName
-        }
-        
 
     }
     
@@ -97,6 +84,20 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             }
             
             return
+        }
+        // .currentUserの名前を変更する
+        if let user = Auth.auth().currentUser {
+            let changeRequest = user.createProfileChangeRequest()
+            changeRequest.displayName = displayName
+            changeRequest.commitChanges { error in
+                if let error = error {
+//                    SVProgressHUD.showError(withStatus: "表示名の変更に失敗しました。")
+                    print("DEBUG_PRINT: " + error.localizedDescription)
+                    return
+                }
+                print("DEBUG_PRINT: [displayName = \(user.displayName!)]の設定に成功しました。")
+                
+            }
         }
         //入力がない時、ある時で分岐
         if let stature = statureTextField.text, let prefectures = prefecturesTextField.text,let displayName = displayNameTextField.text {
@@ -159,9 +160,10 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         // 自分の選択肢を生成
         let action1 = UIAlertAction(title: "現在の画像を削除", style: UIAlertAction.Style.destructive, handler: {
             (action: UIAlertAction!) in
-            self.iconImageView.image = nil
             self.iconImageView.setNeedsDisplay()
             self.iconImageView.layoutIfNeeded()
+            self.iconImageView.image = nil
+            
         })
         let action2 = UIAlertAction(title: "ライブラリから選択", style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) in
@@ -254,21 +256,26 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
     }
     
-    func loadUserInfo(){
-        guard let uid =  Auth.auth().currentUser?.uid else {
-            //ログイン画面表示
-            return
-        }
-        let userRef = Database.database().reference().child(Users.UserPath).child(uid)
-        userRef.observe(.value, with: { snapshot in
-            
-            let userData = UserData(snapshot: snapshot, myId: uid)
-            self.setUserData(userData)
-        })
-        
-    }
+//    func loadUserInfo(){
+//        guard let uid =  Auth.auth().currentUser?.uid else {
+//            //ログイン画面表示
+//            return
+//        }
+//        let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+//        userRef.observe(.value, with: { snapshot in
+//
+//            let userData = UserData(snapshot: snapshot, myId: uid)
+//            self.setUserData(userData)
+//        })
+//
+//    }
     // データをfirebaseから取得し、表示させる
     func setUserData(_ userData: UserData){
+        
+        let user = Auth.auth().currentUser
+        if let user = user {
+            displayNameTextField.text = user.displayName
+        }
         //firebaseにデータがある時
         if userData.iconimage == nil{
             let iconimageView = UIImageView()
@@ -280,8 +287,14 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         genderTextField.text = "\(userData.gender ?? "")"
         statureTextField.text = "\(userData.stature ?? "")"
         prefecturesTextField.text = "\(userData.prefectures ?? "")"
+        
+        if let gender = userData.gender, let prefectures = userData.prefectures  {
+            let index = genderlist.index(of: gender) ?? 1
+            genderpickerView.selectRow(index, inComponent: 0, animated: true)
+            
+            let pIndex = prefectureslist.index(of: prefectures) ?? 1
+            // はじめに表示する項目を指定
+            prefecturespickerView.selectRow(pIndex, inComponent: 0, animated: true)
+        }
     }
-    
-    
-   
 }

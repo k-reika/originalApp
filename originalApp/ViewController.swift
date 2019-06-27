@@ -38,12 +38,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         // タイトルをセット
-        self.navigationItem.title = "Vestiti"
+        self.navigationItem.title = "Record Porter"
         
         // フォント種をTime New Roman、サイズを10に指定
         self.navigationController?.navigationBar.titleTextAttributes
-            = [NSAttributedString.Key.font: UIFont(name: "Sinhala Sangam MN", size: 15)!]
-
+            = [NSAttributedString.Key.font: UIFont(name: "Palatino-Roman", size: 20)!]
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -57,7 +57,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "Cell")
-
+        
         // テーブル行の高さをAutoLayoutで自動調整する
         tableView.rowHeight = UITableView.automaticDimension
         // テーブル行の高さの概算値を設定しておく
@@ -67,6 +67,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("DEBUG_PRINT: viewWillAppear")
+        
+        
+        func loadUserInfo(uid: String?){
+            guard let uid = uid else { return }
+            let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+            userRef.observe(.value, with: { snapshot in
+                
+                let userData = UserData(snapshot: snapshot, myId: uid)
+                self.userArray.append(userData)
+            })
+        }
         
         if Auth.auth().currentUser != nil {
             if self.observing == false {
@@ -79,6 +90,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     if let uid = Auth.auth().currentUser?.uid {
                         let postData = PostData(snapshot: snapshot, myId: uid)
                         self.postArray.insert(postData, at: 0)
+                        loadUserInfo(uid: postData.userid)
                         
                         // TableViewを再表示する
                         self.tableView.reloadData()
@@ -144,14 +156,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return postArray.count
+        return postArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // セルを取得してデータを設定する
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostTableViewCell
+        let postData = postArray[indexPath.row]
         cell.setPostData(postArray[indexPath.row])
-        
+        let userData = userArray.filter { $0.userId == postData.userid }.first
+        if let userData = userData {
+            cell.setUserData(userData)
+        }
         // セル内のボタンのアクションをソースコードで設定する
         cell.likeButton.addTarget(self, action:#selector(handleButton(_:forEvent:)), for: .touchUpInside)
         
@@ -191,10 +207,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
             let likes = ["likes": postData.likes]
             postRef.updateChildValues(likes)
-            
         }
     }
-    
 }
 
 extension ViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
@@ -207,5 +221,4 @@ extension ViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
         return NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
     }
 }
-
 

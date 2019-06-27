@@ -16,6 +16,7 @@ class PostTableViewCell: UITableViewCell {
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var likeLabel: UILabel!
@@ -54,12 +55,14 @@ class PostTableViewCell: UITableViewCell {
     func setUserData(_ userData: UserData){
         self.iconImageView.image = userData.iconimage
         
-        self.userLabel.text = "\(userData.name ?? "") / \(userData.gender ?? "") / \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
+        self.userLabel.text = " \(userData.gender ?? "") / \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
     }
     
     func setPostData(_ postData: PostData) {
         
         self.postImageView.image = postData.image
+        
+        self.userNameLabel.text = "\(postData.name ?? "") "
         
         self.captionLabel.text = "\(postData.caption!)\n"
         let likeNumber = postData.likes.count

@@ -18,6 +18,7 @@ class MypageCollectionViewController: UIViewController {
     
     var iconimage: UIImage!
     var postArray: [PostData] = []
+    var userData: UserData?
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
@@ -64,8 +65,8 @@ class MypageCollectionViewController: UIViewController {
         let userRef = Database.database().reference().child(Users.UserPath).child(uid)
         userRef.observe(.value, with: { snapshot in
             
-            let userData = UserData(snapshot: snapshot, myId: uid)
-            self.setUserData(userData)
+            self.userData = UserData(snapshot: snapshot, myId: uid)
+            self.setUserData(self.userData!)
         })
         
     }
@@ -76,6 +77,7 @@ class MypageCollectionViewController: UIViewController {
         self.iconImageView.image = userData.iconimage
         /// プロフィールを表示
         self.userLabel.text = "\(userData.name ?? "") / \(userData.gender ?? "") / \(userData.stature ?? "")cm / \(userData.prefectures ?? "")"
+        
     }
     
     func loadUserPostData() {
@@ -101,14 +103,13 @@ class MypageCollectionViewController: UIViewController {
         self.collectionView.reloadData()
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        self.setUserData(userData!)
-//        print(self.userData ?? "マイページdataなし")
-//        if let viewController = segue.destination as? SettingViewController {
-//            viewController.userData = self.userData
-//            print(self.userData ?? "マイページdataなし")
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print(self.userData ?? "マイページdataなし")
+        if let viewController = segue.destination as? SettingViewController {
+            viewController.userData = self.userData
+            print(self.userData ?? "マイページdataなし")
+        }
+    }
 }
 
 // MARK: UICollectionViewDataSource
