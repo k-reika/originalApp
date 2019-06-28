@@ -1,12 +1,11 @@
-//
-//  SearchViewController.swift
-//  originalApp
-//
-//  Created by 菊池 玲花 on 2019/06/05.
-//  Copyright © 2019 reika.kikuchi. All rights reserved.
-//
 
-
+////
+////  SearchViewController.swift
+////  originalApp
+////
+////  Created by 菊池 玲花 on 2019/06/05.
+////  Copyright © 2019 reika.kikuchi. All rights reserved.
+////
 import UIKit
 import Firebase
 import FirebaseAuth
@@ -20,6 +19,7 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     var postAllArray: [PostData] = []
     var postArray: [PostData] = []
+    var userArray: [UserData] = []
     var mySearchBar: UISearchBar!
     var observing = false
     
@@ -54,69 +54,72 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         super.viewWillAppear(animated)
         print("DEBUG_PRINT: viewWillAppear")
         
-        if Auth.auth().currentUser != nil {
-            if self.observing == false {
-                // 要素が追加されたらpostArrayに追加してTableViewを再表示する
-                let postsRef = Database.database().reference().child(Const.PostPath)
-                postsRef.observe(.childAdded, with: { snapshot in
-                    print("DEBUG_PRINT: .childAddedイベントが発生しました。")
-                    
-                    // PostDataクラスを生成して受け取ったデータを設定する
-                    if let uid = Auth.auth().currentUser?.uid {
-                        let postData = PostData(snapshot: snapshot, myId: uid)
-                        self.postArray.insert(postData, at: 0)
-                        
-                        // TableViewを再表示する
-                        self.tableView.reloadData()
-                    }
-                })
-                // 要素が変更されたら該当のデータをpostArrayから一度削除した後に新しいデータを追加してTableViewを再表示する
-                postsRef.observe(.childChanged, with: { snapshot in
-                    print("DEBUG_PRINT: .childChangedイベントが発生しました。")
-                    
-                    if let uid = Auth.auth().currentUser?.uid {
-                        // PostDataクラスを生成して受け取ったデータを設定する
-                        let postData = PostData(snapshot: snapshot, myId: uid)
-                        
-                        // 保持している配列からidが同じものを探す
-                        var index: Int = 0
-                        for post in self.postArray {
-                            if post.id == postData.id {
-                                index = self.postArray.index(of: post)!
-                                break
-                            }
-                        }
-                        
-                        // 差し替えるため一度削除する
-                        self.postArray.remove(at: index)
-                        
-                        // 削除したところに更新済みのデータを追加する
-                        self.postArray.insert(postData, at: index)
-                        
-                        // TableViewを再表示する
-                        self.tableView.reloadData()
-                    }
-                })
-                
-                // DatabaseのobserveEventが上記コードにより登録されたため
-                // trueとする
-                observing = true
-            }
-        } else {
-            if observing == true {
-                // ログアウトを検出したら、一旦テーブルをクリアしてオブザーバーを削除する。
-                // テーブルをクリアする
-                postArray = []
-                
-                tableView.reloadData()
-                // オブザーバーを削除する
-                Database.database().reference().removeAllObservers()
-                
-                // DatabaseのobserveEventが上記コードにより解除されたため
-                // falseとする
-                observing = false
-            }
-        }
+        
+        /*if Auth.auth().currentUser != nil {
+         if self.observing == false {
+         // 要素が追加されたらpostArrayに追加してTableViewを再表示する
+         let postsRef = Database.database().reference().child(Const.PostPath)
+         postsRef.observe(.childAdded, with: { snapshot in
+         print("DEBUG_PRINT: .childAddedイベントが発生しました。")
+         
+         // PostDataクラスを生成して受け取ったデータを設定する
+         if let uid = Auth.auth().currentUser?.uid {
+         let postData = PostData(snapshot: snapshot, myId: uid)
+         self.postAllArray.insert(postData, at: 0)
+         loadUserInfo(uid: postData.userid)
+         
+         // TableViewを再表示する
+         self.tableView.reloadData()
+         }
+         })
+         // 要素が変更されたら該当のデータをpostArrayから一度削除した後に新しいデータを追加してTableViewを再表示する
+         postsRef.observe(.childChanged, with: { snapshot in
+         print("DEBUG_PRINT: .childChangedイベントが発生しました。")
+         
+         if let uid = Auth.auth().currentUser?.uid {
+         // PostDataクラスを生成して受け取ったデータを設定する
+         let postData = PostData(snapshot: snapshot, myId: uid)
+         
+         // 保持している配列からidが同じものを探す
+         var index: Int = 0
+         for post in self.postAllArray {
+         if post.id == postData.id {
+         index = self.postAllArray.index(of: post)!
+         break
+         }
+         }
+         
+         // 差し替えるため一度削除する
+         self.postAllArray.remove(at: index)
+         
+         // 削除したところに更新済みのデータを追加する
+         self.postAllArray.insert(postData, at: index)
+         
+         
+         // TableViewを再表示する
+         self.tableView.reloadData()
+         }
+         })
+         
+         // DatabaseのobserveEventが上記コードにより登録されたため
+         // trueとする
+         observing = true
+         }
+         } else {
+         if observing == true {
+         // ログアウトを検出したら、一旦テーブルをクリアしてオブザーバーを削除する。
+         // テーブルをクリアする
+         postArray = []
+         
+         tableView.reloadData()
+         // オブザーバーを削除する
+         Database.database().reference().removeAllObservers()
+         
+         // DatabaseのobserveEventが上記コードにより解除されたため
+         // falseとする
+         observing = false
+         }
+         }*/
         
     }
     
@@ -130,8 +133,6 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         }
         
         loadData()
-
-        
     }
     
     // サーチボタンをクリックすると呼び出される
@@ -159,17 +160,35 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
         guard let uid = Auth.auth().currentUser?.uid else {
             return
         }
+        
+        func loadUserInfo(uid: String?){
+            guard let uid = uid else { return }
+            let userRef = Database.database().reference().child(Users.UserPath).child(uid)
+            userRef.observe(.value, with: { snapshot in
+                
+                let userData = UserData(snapshot: snapshot, myId: uid)
+                self.userArray.append(userData)
+            })
+            print(userArray)
+        }
+        
+        postAllArray = []
+        postArray = []
         // postpathを呼び出す
         let  postRef = Database.database().reference().child(Const.PostPath)
         // uidと一致するものを見つける
-        let query = postRef.queryOrdered(byChild: "userid").queryEqual(toValue: uid)
-        query.observeSingleEvent(of:.value, with: { snapshots in
+        //let query = postRef.queryOrdered(byChild: "userid").queryEqual(toValue: uid)
+        postRef.observeSingleEvent(of:.value, with: { snapshots in
             
             for snapshot in snapshots.children {
                 guard let snapshot = snapshot as? DataSnapshot else { continue }
                 let postData = PostData(snapshot: snapshot, myId: uid)
-                self.postArray.append(postData)
+                self.postAllArray.append(postData)
+                loadUserInfo(uid: postData.userid)
                 
+                print(postData)
+                print(self.postAllArray)
+                print(self.postArray)
                 
             }
             
@@ -180,7 +199,9 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
             //
             //            self.postArray = result
             //            print(result)
-            self.postAllArray = self.postArray
+            
+            self.postArray = self.postAllArray
+            print(self.postAllArray)
             self.tableView.reloadData()
         })
         
@@ -208,11 +229,14 @@ class SearchViewController: UIViewController, UITableViewDelegate,UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // セルを取得してデータを設定する
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostTableViewCell
-        cell.setPostData(postArray[indexPath.row])
         // 選択した行にCellを設定する。
-        let post = postArray[indexPath.row]
-        print(post)
-        
+        let postData = postArray[indexPath.row]
+        print(postData)
+        cell.setPostData(postData)
+        let userData = userArray.filter { $0.userId == postData.userid }.first
+        if let userData = userData {
+            cell.setUserData(userData)
+        }
         // セル内のボタンのアクションをソースコードで設定する
         cell.likeButton.addTarget(self, action:#selector(handleButton(_:forEvent:)), for: .touchUpInside)
         

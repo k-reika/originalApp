@@ -12,17 +12,17 @@ import FirebaseAuth
 import DZNEmptyDataSet
 
 @IBDesignable
-class KerningLabel: UILabel {
-    @IBInspectable var kerning: CGFloat = 0.0 {
-        didSet {
-            if let attributedText = self.attributedText {
-                let attribString = NSMutableAttributedString(attributedString: attributedText)
-                attribString.addAttributes([.kern: kerning], range: NSRange(location: 0, length: attributedText.length))
-                self.attributedText = attribString
-            }
-        }
-    }
-}
+//class KerningLabel: UILabel {
+//    @IBInspectable var kerning: CGFloat = 0.0 {
+//        didSet {
+//            if let attributedText = self.attributedText {
+//                let attribString = NSMutableAttributedString(attributedString: attributedText)
+//                attribString.addAttributes([.kern: kerning], range: NSRange(location: 0, length: attributedText.length))
+//                self.attributedText = attribString
+//            }
+//        }
+//    }
+//}
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // フォント種をTime New Roman、サイズを10に指定
         self.navigationController?.navigationBar.titleTextAttributes
-            = [NSAttributedString.Key.font: UIFont(name: "Palatino-Roman", size: 20)!]
+            = [NSAttributedString.Key.font: UIFont(name: "TrebuchetMS-Bold", size: 20)!]
         
         
         tableView.delegate = self
@@ -67,7 +67,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("DEBUG_PRINT: viewWillAppear")
-        
         
         func loadUserInfo(uid: String?){
             guard let uid = uid else { return }

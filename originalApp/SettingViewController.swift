@@ -148,6 +148,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
         self.present(loginViewController!, animated: true, completion: nil)
         
+        navigationController?.popViewController(animated: true)
         // ログイン画面から戻ってきた時のためにホーム画面（index = 0）を選択している状態にしておく
         self.navigationController!.tabBarController!.selectedIndex = 0
         
